@@ -15,40 +15,53 @@ knitr::opts_chunk$set(
 
 # RhodopXin
 
-<!-- badges: start -->
-<!-- badges: end -->
+## Description
 
-The goal of RhodopXin is to ...
+`RhodopXin` is an R package designed for the exploratory analysis of rhodopsins by looking at their structural, functional, and sequence characteristics. Its main feature would be integrating homology modelling with motif discovery which would help in identifying functionally important rhodopsin-specific motifs across different species, giving an insight as to how they have evolved across organism.
+
+Currently, there are no pre-existing R tools that directly work with rhodopsins. Moreover, this package would leverage pre-existing bioinformatics tools for protein analysis and extend their usage to something that is more specific i.e. exploring the properties of rhodopsins in a comprehensive manner.
+
 
 ## Installation
 
-You can install the development version of RhodopXin like so:
+To install the latest version of the package:
 
-``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+```{r}
+install.packages("devtools")
+library("devtools")
+devtools::install_github("calicac001/RhodopXin", build_vignettes = TRUE)
+library("RhodopXin")
 ```
 
-## Example
+To run the shiny App: Under Construction
 
-This is a basic example which shows you how to solve a common problem:
+## Overview
 
-```{r example}
-library(RhodopXin)
-## basic example code
+To see an overview of the package, run:
+
+```{r}
+ls("package:RhodopXin")
+data(package = "RhodopXin") 
+browseVignettes("RhodopXin")
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+RhodopXin contains # functions.
 
-```{r cars}
-summary(cars)
-```
+1. 
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
+An overview of `RhodopXin` is illustrated below.
+TBD
 
-You can also embed plots, for example:
+## Contributions
 
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
+The author of the package is Chloe Nichole Calica. The author wrote the functions.
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+## References
+
+Silva, A. (2022) TestingPackage: An Example R Package For BCB410H. https://github.com/anjalisilva/TestingPackage
+
+Wickham, H., François, R., Henry, L., Müller, K., Vaughan, D. (2023). dplyr: A Grammar of Data Manipulation. https://dplyr.tidyverse.org
+
+## Acknowledgements
+
+This package was developed as part of an assessment for 2024 BCB410H: Applied Bioinformatics course at the University of Toronto, Toronto, CANADA. `RhodopXin` welcomes issues, enhancement requests, and other contributions. To submit an issue, use the [GitHub issues](https://github.com/calicac001/RhodopXin/issues). Many thanks to those who provided feedback to improve this package.
