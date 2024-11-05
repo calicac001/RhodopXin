@@ -1,6 +1,5 @@
 #' Find 3D Structure Given Amino Acid Sequence
 #'
-#'
 #' @param aaSeq <AAString> The amino acid sequence that we want to find the 3D structure of
 #'
 #' @examples
@@ -27,4 +26,29 @@ find3dStructure <- function(aaSeq){
   }
 
   return(structDataframe)
+}
+
+#' Display 3D structure Given RCSB ID
+#'
+#' Adapted directly from rPDBapi's documentation
+#'
+#' @param rcsb_id
+#'
+#' @return Viewer
+#'
+#' @export
+#'
+#' @import rPDBapi, r3dmol
+
+loadStructure <- function(rcsb_id){
+  # Retrieve and parse a PDB structure
+  pdb_path <- get_pdb_file(rcsb_id, filetype = "pdb", save = TRUE)
+
+  # Visualize the tertiary structure using r3dmol
+  viewer <- r3dmol() %>%
+    m_add_model(pdb_path$path, format = "pdb") %>% # Load the PDB file
+    m_set_style(style = m_style_cartoon()) %>% # Cartoon representation
+    m_zoom_to()
+
+  return(viewer)
 }
