@@ -25,6 +25,12 @@
 #' fastaPath <- system.file("extdata", "rcsb_pdb_8GI8.fasta", package = "RhodopXin")
 #' seq <- loadSequence(fastaPath)
 #'
+#' @references
+#' Pagès H, Aboyoun P, Gentleman R, DebRoy S (2024). _Biostrings: Efficient manipulation
+#' of biological strings_. doi:10.18129/B9.bioc.Biostrings
+#' <https://doi.org/10.18129/B9.bioc.Biostrings>, R package version 2.73.1,
+#' <https://bioconductor.org/packages/Biostrings>.
+#'
 #' @export
 #' @import Biostrings
 #'
