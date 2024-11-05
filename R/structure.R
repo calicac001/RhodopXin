@@ -38,11 +38,11 @@ find3dStructure <- function(aaSeq){
 #'
 #' @export
 #'
-#' @import rPDBapi, r3dmol
+#' @import rPDBapi, r3dmol, dplyr
 
 loadStructure <- function(rcsb_id){
   # Retrieve and parse a PDB structure
-  pdb_path <- get_pdb_file(rcsb_id, filetype = "pdb", save = TRUE)
+  pdb_path <- rPDBapi::get_pdb_file(rcsb_id, filetype = "pdb", save = TRUE)
 
   # Visualize the tertiary structure using r3dmol
   viewer <- r3dmol() %>%
@@ -51,4 +51,23 @@ loadStructure <- function(rcsb_id){
     m_zoom_to()
 
   return(viewer)
+}
+
+
+#' Find Helices Positions Given RCSB ID
+#'
+#' Adapted directly from rPDBapi's documentation
+#'
+#' @param rcsb_id
+#'
+#' @return dataframe
+#'
+#' @export
+#'
+#' @import bio3d
+findHelices <- function(rcsb_id){
+  pdb_struct <- bio3d::read.pdb(rcsb_id)
+  helices_df <- data.frame(start = pdb_struct$helix$start,
+                           end = pdb_struct$helix$end)
+  return(helices_df)
 }
