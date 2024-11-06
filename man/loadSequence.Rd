@@ -4,31 +4,31 @@
 \alias{loadSequence}
 \title{Load Amino Acid Sequence Input}
 \usage{
-loadSequence(inputStr)
+loadSequence(filePath)
 }
 \arguments{
-\item{inputStr}{A string input corresponding to the amino acid sequence or a
-path to a FASTA file containing the amino acid sequence.}
+\item{filePath}{A string input corresponding to a a FASTA file path
+containing the amino acid sequences of multiple rhodopsins.}
 }
 \value{
-AAString
+AAStringSet
 }
 \description{
-A function that takes in a string of an amino acid corresponding to a rhodopsin
-or a FASTA file path containing the sequence information and creates an AAString
-object out of it
+A function that takes in a FASTA file path containing the sequence information
+and creates an AAStringSet object out of it
 }
 \examples{
 # Example 1:
-# Using an amino acid string as input
-sampleAA <- "MPFYDSRPPEGWPKGSINDMDYPLLGSICAVCCVFVAGSGIWMLYRLDLGMGYSCKPYKSGRA"
-seq <- loadSequence(sampleAA)
-
-# Example 2:
 # Using a fasta file as input
 
 # Define the path to the fasta file (this one is included in the package)
-fastaPath <- system.file("extdata", "rcsb_pdb_8GI8.fasta", package = "RhodopXin")
+fastaPath <- system.file("extdata", "rhodopsins.fasta", package = "RhodopXin")
 seq <- loadSequence(fastaPath)
 
+}
+\references{
+Pagès H, Aboyoun P, Gentleman R, DebRoy S (2024). \emph{Biostrings: Efficient manipulation
+of biological strings}. doi:10.18129/B9.bioc.Biostrings
+\url{https://doi.org/10.18129/B9.bioc.Biostrings}, R package version 2.73.1,
+\url{https://bioconductor.org/packages/Biostrings}.
 }

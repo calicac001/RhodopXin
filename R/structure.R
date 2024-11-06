@@ -1,11 +1,17 @@
 #' Find 3D Structure Given Amino Acid Sequence
 #'
-#' @param aaSeq <AAString> The amino acid sequence that we want to find the 3D structure of
+#' @param aaSeq An AAString object of the rhodopsin sequence that we want to find the 3D structure of
+#'
+#' @return dataframe with information on structures
 #'
 #' @examples
 #' fastaPath <- system.file("extdata", "rcsb_pdb_8GI8.fasta", package = "RhodopXin")
 #' seq <- loadSequence(fastaPath)
 #' struct_df <- find3dStructure(seq)
+#'
+#' @references
+#' Korkmaz S, Yamasan B (2024). _rPDBapi: A Comprehensive Interface for Accessing the Protein
+#' Data Bank_. R package version 2.1.1, <https://CRAN.R-project.org/package=rPDBapi>.
 #'
 #' @export
 #'
@@ -36,9 +42,18 @@ find3dStructure <- function(aaSeq){
 #'
 #' @return Viewer
 #'
+#' @references
+#' Korkmaz S, Yamasan B (2024). _rPDBapi: A Comprehensive Interface for Accessing the Protein Data Bank_. R package version 2.1.1, <https://CRAN.R-project.org/package=rPDBapi>.
+#'
+#' Su W, Johnston B (2021). _r3dmol: Create Interactive 3D Visualizations of Molecular Data_. Rpackage version 0.1.2, <https://CRAN.R-project.org/package=r3dmol>.
+#'
+#' Wickham, H., François, R., Henry, L., Müller, K., Vaughan, D. (2023). _dplyr: A Grammar of Data Manipulation_. <https://dplyr.tidyverse.org>.
+#'
 #' @export
 #'
-#' @import rPDBapi, r3dmol, dplyr
+#' @import rPDBapi
+#' @import r3dmol
+#' @import dplyr
 
 loadStructure <- function(rcsb_id){
   # Retrieve and parse a PDB structure
@@ -56,11 +71,11 @@ loadStructure <- function(rcsb_id){
 
 #' Find Helices Positions Given RCSB ID
 #'
-#' Adapted directly from rPDBapi's documentation
-#'
 #' @param rcsb_id
 #'
 #' @return dataframe
+#'
+#' @references Grant B.J., Rodrigues A.P.C., ElSawy K.M., McCammon J.A., Caves L.S.D. (2006). _Bio3D: An R package for the comparative analysis of protein structures_. <http://thegrantlab.org/bio3d/>
 #'
 #' @export
 #'

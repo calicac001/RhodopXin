@@ -1,20 +1,8 @@
-#' Load Amino Acid Sequence Input
+#' PW Align Helices with Query Sequences
 #'
-#' A function that takes in a string of an amino acid corresponding to a rhodopsin
-#' or a FASTA file path containing the sequence information and creates an AAString
-#' object out of it
+#' @param template AAStringSet of template rhodopsin to get helices from
 #'
-#' @param inputStr A string input corresponding to a a FASTA file path
-#' containing the amino acid sequences of multiple rhodopsins.
-#'
-#' @return AAStringSet
-#'
-#' @examples
-#' # Example 1:
-#'
-#' # Define the path to the fasta file (this one is included in the package)
-#' fastaPath <- system.file("extdata", "template.fasta", package = "RhodopXin")
-#' seq <- loadSequence(fastaPath)
+#' @param sequences AAStringSet of query sequences to align to helices
 #'
 #' @references
 #' Pagès H, Aboyoun P, Gentleman R, DebRoy S (2024). _Biostrings: Efficient manipulation
@@ -22,9 +10,13 @@
 #' <https://doi.org/10.18129/B9.bioc.Biostrings>, R package version 2.73.1,
 #' <https://bioconductor.org/packages/Biostrings>.
 #'
-#' @export
-#' @import Biostrings, dplyr, pwalign
+#' Aboyoun P, Gentleman R (2024). _pwalign: Perform pairwise sequence alignments_.doi:10.18129/B9.bioc.pwalign <https://doi.org/10.18129/B9.bioc.pwalign>, R package version 1.2.0, <https://bioconductor.org/packages/pwalign>.
 #'
+#' @export
+#' @import Biostrings
+#' @import dplyr
+#' @import pwalign
+
 createPWAlignments <- function(template, sequences){
   helices_seq <- helixSegments(template = template)
 
@@ -36,13 +28,17 @@ createPWAlignments <- function(template, sequences){
   }
 }
 
-#' Find Helices Positions Given RCSB ID
+#' Get Helix Segments of Sequence
 #'
-#' Adapted directly from rPDBapi's documentation
-#'
-#' @param rcsb_id
+#' @param template
 #'
 #' @return dataframe
+#'
+#' #' @references
+#' Pagès H, Aboyoun P, Gentleman R, DebRoy S (2024). _Biostrings: Efficient manipulation
+#' of biological strings_. doi:10.18129/B9.bioc.Biostrings
+#' <https://doi.org/10.18129/B9.bioc.Biostrings>, R package version 2.73.1,
+#' <https://bioconductor.org/packages/Biostrings>.
 #'
 #' @export
 #' @import Biostrings

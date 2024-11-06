@@ -17,16 +17,16 @@ knitr::opts_chunk$set(
 
 ## Description
 
-`RhodopXin` is an R package designed for the exploratory analysis of rhodopsins by looking at their structural, functional, and sequence characteristics. Its main feature would be integrating homology modelling with motif discovery which would help in identifying functionally important rhodopsin-specific motifs across different species, giving an insight as to how they have evolved across organism.
+`RhodopXin` is an R package designed for the exploratory analysis of rhodopsins by looking at their  sequence and structural characteristics. Its main feature would be integrating homology modelling with motif discovery which would help in identifying functionally important rhodopsin-specific motifs across different species, giving an insight as to how they have evolved across organism. Currently, there are no pre-existing R tools that directly work with rhodopsins.
 
-Currently, there are no pre-existing R tools that directly work with rhodopsins. Moreover, this package would leverage pre-existing bioinformatics tools for protein analysis and extend their usage to something that is more specific i.e. exploring the properties of rhodopsins in a comprehensive manner.
+`RhodopXin` was developed using R version 4.4.1 (2024-06-14 ucrt), Platform: x86_64-w64-mingw32/x64, and Running under: Windows 11 x64 (build 22631)
 
 
 ## Installation
 
 To install the latest version of the package:
 
-```{r}
+``` r
 install.packages("devtools")
 library("devtools")
 devtools::install_github("calicac001/RhodopXin", build_vignettes = TRUE)
@@ -39,7 +39,7 @@ To run the shiny App: Under Construction
 
 To see an overview of the package, run:
 
-```{r}
+``` r
 ls("package:RhodopXin")
 data(package = "RhodopXin") 
 browseVignettes("RhodopXin")
@@ -47,7 +47,27 @@ browseVignettes("RhodopXin")
 
 RhodopXin contains # functions.
 
-1. 
+1. ***loadSequence()*** - takes in a FASTA file path and creates an AAStringSet object out of it
+
+2. ***find3dStructure()*** - given an amino acid sequence, query RCSB PDB to find if it has any 3D structures
+
+3. ***loadStructure()*** - given a rcsb id of a structure, load it in a viewer
+
+4. ***findHelices()*** - given a rcsb id of a structure, determine the positions of the helices
+
+5. ***createPWAlignments*** - generate pairwise alignments of template rhodopsin helices and query rhodopsins
+
+6. ***helixSegments*** - get a list of AAString object corresponding to the sequences of a rhodopsin's helices
+
+7. ***findMotifs*** - (not yet implemented) identify conserved motifs in the rhodopsin sequence
+
+8. ***motifToStruct*** - (not yet implemented) map identifies motifs to 3d structure
+
+9. ***basicStats*** - (not yet implemented) provide basic stats on the properties of the rhodopsin sequence such as length, hydrophobicity, and charge distribution
+
+10. ***exploratoryPlots*** - (not yet implemented) generate exploratory plots such as sequence logos or motif occurrence
+
+11. ***homology_modelling*** - (not yet implemented) allow user to generate 3D structural models for rhodopsin structure using a homology modelline if no experimental and predicted structure exists.
 
 An overview of `RhodopXin` is illustrated below.
 TBD
@@ -57,10 +77,13 @@ TBD
 The author of the package is Chloe Nichole Calica. The author wrote the functions.
 
 ## References
+Korkmaz S, Yamasan B (2024). _rPDBapi: A Comprehensive Interface for Accessing the Protein Data Bank_. R package version 2.1.1, <https://CRAN.R-project.org/package=rPDBapi>.
+  
+Silva, A. (2022) _TestingPackage: An Example R Package For BCB410H_. <https://github.com/anjalisilva/TestingPackage>.
 
-Silva, A. (2022) TestingPackage: An Example R Package For BCB410H. https://github.com/anjalisilva/TestingPackage
+Su W, Johnston B (2021). _r3dmol: Create Interactive 3D Visualizations of Molecular Data_. R package version 0.1.2, <https://CRAN.R-project.org/package=r3dmol>.
 
-Wickham, H., François, R., Henry, L., Müller, K., Vaughan, D. (2023). dplyr: A Grammar of Data Manipulation. https://dplyr.tidyverse.org
+Wickham, H., François, R., Henry, L., Müller, K., Vaughan, D. (2023). _dplyr: A Grammar of Data Manipulation_. <https://dplyr.tidyverse.org>.
 
 ## Acknowledgements
 
