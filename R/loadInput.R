@@ -1,10 +1,9 @@
 #' Load Amino Acid Sequence Input
 #'
-#' A function that takes in a string of an amino acid corresponding to a rhodopsin
-#' or a FASTA file path containing the sequence information and creates an AAString
-#' object out of it
+#' A function that takes in a FASTA file path containing the sequence information
+#' and creates an AAStringSet object out of it
 #'
-#' @param inputStr A string input corresponding to a a FASTA file path
+#' @param filePath A string input corresponding to a a FASTA file path
 #' containing the amino acid sequences of multiple rhodopsins.
 #'
 #' @return AAStringSet
@@ -26,21 +25,24 @@
 #' @export
 #' @import Biostrings
 #'
-loadSequence <- function(inputStr){
-  # Check if inputStr is a character
-  if (!is.character(inputStr)) {
-    stop("Invalid parameter type: inputStr must be of type character")
+loadSequence <- function(filePath){
+  # Check if filePath is a character
+  if (!is.character(filePath)) {
+    stop("Invalid parameter type: filePath must be of type character")
   }
 
-  if (!grepl("\\.(fa|fasta|txt)$", inputStr)){
+  # Check if the file format is valid
+  if (!grepl("\\.(fa|fasta|txt)$", filePath)){
     stop("Incorrect file format: must be one of '.fa', '.fasta', '.txt'")
   }
 
-  if (!file.exists(inputStr)){
+  # Check if the file exists
+  if (!file.exists(filePath)){
     stop("Invalid file: specified path to the fasta file does not exist")
   }
 
-  seq_set <- Biostrings::readAAStringSet(inputStr)
+  # Create AAStringSet object given the input file
+  seq_set <- Biostrings::readAAStringSet(filePath)
 
   return(seq_set)
 }

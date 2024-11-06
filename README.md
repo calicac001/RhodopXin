@@ -87,9 +87,23 @@ functions.
 
 ## References
 
+Aboyoun P, Gentleman R (2024). *pwalign: Perform pairwise sequence
+alignments*.doi:10.18129/B9.bioc.pwalign
+<https://doi.org/10.18129/B9.bioc.pwalign>, R package version 1.2.0,
+<https://bioconductor.org/packages/pwalign>.
+
+Grant B.J., Rodrigues A.P.C., ElSawy K.M., McCammon J.A., Caves L.S.D.
+(2006). *Bio3D: An R package for the comparative analysis of protein
+structures*. <http://thegrantlab.org/bio3d/>
+
 Korkmaz S, Yamasan B (2024). *rPDBapi: A Comprehensive Interface for
 Accessing the Protein Data Bank*. R package version 2.1.1,
 <https://CRAN.R-project.org/package=rPDBapi>.
+
+Pagès H, Aboyoun P, Gentleman R, DebRoy S (2024). *Biostrings: Efficient
+manipulation of biological strings*. <doi:10.18129/B9.bioc.Biostrings>
+<https://doi.org/10.18129/B9.bioc.Biostrings>, R package version 2.73.1,
+<https://bioconductor.org/packages/Biostrings>.
 
 Silva, A. (2022) *TestingPackage: An Example R Package For BCB410H*.
 <https://github.com/anjalisilva/TestingPackage>.

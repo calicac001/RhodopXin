@@ -75,7 +75,8 @@ loadStructure <- function(rcsb_id){
 #'
 #' @return dataframe
 #'
-#' @references Grant B.J., Rodrigues A.P.C., ElSawy K.M., McCammon J.A., Caves L.S.D. (2006). _Bio3D: An R package for the comparative analysis of protein structures_. <http://thegrantlab.org/bio3d/>
+#' @references
+#' Grant B.J., Rodrigues A.P.C., ElSawy K.M., McCammon J.A., Caves L.S.D. (2006). _Bio3D: An R package for the comparative analysis of protein structures_. <http://thegrantlab.org/bio3d/>
 #'
 #' @export
 #'
