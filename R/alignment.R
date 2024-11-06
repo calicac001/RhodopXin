@@ -30,7 +30,7 @@ createPWAlignments <- function(template, sequences){
 
   for (i in seq_along(helices_seq)){
     for (j in seq_along(sequences)){
-      print(paste0("Alignment with Helix ", i, "and Query sequence ", j))
+      print(paste("Alignment with Helix", LETTERS[i], "and Query sequence", j))
       print(pwalign::pairwiseAlignment(helices_seq[[i]], sequences[[j]], type = "local"))
     }
   }
