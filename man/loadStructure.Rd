@@ -7,7 +7,7 @@
 loadStructure(rcsb_id)
 }
 \arguments{
-\item{rcsb_id}{}
+\item{rcsb_id}{desc}
 }
 \value{
 Viewer

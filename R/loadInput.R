@@ -23,7 +23,7 @@
 #' <https://bioconductor.org/packages/Biostrings>.
 #'
 #' @export
-#' @import Biostrings
+#' @importFrom Biostrings readAAStringSet
 #'
 loadSequence <- function(filePath){
   # Check if filePath is a character

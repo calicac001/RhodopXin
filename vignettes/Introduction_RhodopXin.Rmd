@@ -51,7 +51,7 @@ available_structs
 
 # Only load the first structure
 rcsb_id <- available_structs$rcsb_id[1]
-loadStructure(rcsb_id)
+#loadStructure(rcsb_id)
 
 # Print the helices segment of the template rhodopsin
 findHelices(rcsb_id)

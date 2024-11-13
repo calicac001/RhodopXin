@@ -7,7 +7,7 @@
 helixSegments(template)
 }
 \arguments{
-\item{template}{}
+\item{template}{desc}
 }
 \value{
 dataframe

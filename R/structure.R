@@ -5,7 +5,7 @@
 #' @return dataframe with information on structures
 #'
 #' @examples
-#' fastaPath <- system.file("extdata", "rcsb_pdb_8GI8.fasta", package = "RhodopXin")
+#' fastaPath <- system.file("extdata", "template.fasta", package = "RhodopXin")
 #' seq <- loadSequence(fastaPath)
 #' struct_df <- find3dStructure(seq)
 #'
@@ -15,7 +15,7 @@
 #'
 #' @export
 #'
-#' @import rPDBapi
+#' @importFrom rPDBapi SequenceOperator perform_search get_info
 
 find3dStructure <- function(aaSeq){
   aaSeqChar <- as.character(aaSeq)
@@ -38,7 +38,7 @@ find3dStructure <- function(aaSeq){
 #'
 #' Adapted directly from rPDBapi's documentation
 #'
-#' @param rcsb_id
+#' @param rcsb_id desc
 #'
 #' @return Viewer
 #'
@@ -51,9 +51,9 @@ find3dStructure <- function(aaSeq){
 #'
 #' @export
 #'
-#' @import rPDBapi
-#' @import r3dmol
-#' @import dplyr
+#' @importFrom rPDBapi get_pdb_file
+#' @importFrom r3dmol r3dmol m_add_model m_set_style m_zoom_to
+#' @importFrom dplyr %>%
 
 loadStructure <- function(rcsb_id){
   # Retrieve and parse a PDB structure
@@ -71,7 +71,7 @@ loadStructure <- function(rcsb_id){
 
 #' Find Helices Positions Given RCSB ID
 #'
-#' @param rcsb_id
+#' @param rcsb_id desc
 #'
 #' @return dataframe
 #'
@@ -80,23 +80,14 @@ loadStructure <- function(rcsb_id){
 #'
 #' @export
 #'
-#' @import bio3d
+#' @importFrom bio3d read.pdb
+
 findHelices <- function(rcsb_id){
   pdb_struct <- bio3d::read.pdb(rcsb_id)
   helices_df <- data.frame(start = pdb_struct$helix$start,
                            end = pdb_struct$helix$end)
 
-  # ChatGPT: Generate row names based on the number of rows in the data frame
-  num_rows <- nrow(helices_df)
-  helices_names <- if (num_rows <= 26) {
-    paste("Helix", LETTERS[1:num_rows])
-  } else {
-    c(paste("Helix", LETTERS),
-            paste0("Helix", rep(LETTERS, each = 26)[1:(num_rows - 26)],
-                   rep(LETTERS, times = num_rows %/% 26)[1:(num_rows - 26)]))
-  }
-
-  rownames(helices_df) <- helices_names
+  rownames(helices_df) <-  paste("Helix", 1:nrow(helices_df))
 
   return(helices_df)
 }

@@ -17,7 +17,6 @@ Imports:
     bio3d,
     Biostrings,
     dplyr,
-    msa,
     pwalign,
     r3dmol,
     rPDBapi

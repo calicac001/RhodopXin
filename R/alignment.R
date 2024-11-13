@@ -13,9 +13,9 @@
 #' Aboyoun P, Gentleman R (2024). _pwalign: Perform pairwise sequence alignments_.doi:10.18129/B9.bioc.pwalign <https://doi.org/10.18129/B9.bioc.pwalign>, R package version 1.2.0, <https://bioconductor.org/packages/pwalign>.
 #'
 #' @export
-#' @import Biostrings
-#' @import dplyr
-#' @import pwalign
+#'
+#' @importFrom pwalign pairwiseAlignment
+
 
 createPWAlignments <- function(template, sequences){
   helices_seq <- helixSegments(template = template)
@@ -30,7 +30,7 @@ createPWAlignments <- function(template, sequences){
 
 #' Get Helix Segments of Sequence
 #'
-#' @param template
+#' @param template desc
 #'
 #' @return dataframe
 #'
@@ -41,7 +41,10 @@ createPWAlignments <- function(template, sequences){
 #' <https://bioconductor.org/packages/Biostrings>.
 #'
 #' @export
-#' @import Biostrings
+#'
+#' @importClassesFrom Biostrings AAStringSet
+#' @importFrom Biostrings subseq
+
 helixSegments <- function(template){
   template_id <- substr(names(template)[[1]], 1, 4)
   helices_df <- findHelices(template_id)
@@ -51,7 +54,7 @@ helixSegments <- function(template){
     start_pos <- helices_df$start[i]
     end_pos <- helices_df$end[i]
 
-    segment <- subseq(template[[1]], start=start_pos, end=end_pos)
+    segment <- Biostrings::subseq(template[[1]], start=start_pos, end=end_pos)
 
     segments[[i]] <- Biostrings::AAStringSet(as.character(segment))
   }

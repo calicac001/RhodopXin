@@ -16,7 +16,7 @@ dataframe with information on structures
 Find 3D Structure Given Amino Acid Sequence
 }
 \examples{
-fastaPath <- system.file("extdata", "rcsb_pdb_8GI8.fasta", package = "RhodopXin")
+fastaPath <- system.file("extdata", "template.fasta", package = "RhodopXin")
 seq <- loadSequence(fastaPath)
 struct_df <- find3dStructure(seq)
 
