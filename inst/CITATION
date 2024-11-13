@@ -1,0 +1,12 @@
+citHeader("To cite TestingPackage in publications use:")
+
+citEntry(entry = "Unpublished",
+  title        = "RhodopXin: A Package for the Exploratory Analysis of Rhodopsins",
+  author       = "Chloe Calica",
+  note         = "Unpublished",
+  year         = "2024",
+
+  textVersion  =
+  paste("Calica, C. (2024) RhodopXin: A Package for the Exploratory Analysis of Rhodopsins.
+        Unpublished. URL https://github.com/calicac001/RhodopXin.")
+)
