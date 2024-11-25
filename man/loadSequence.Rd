@@ -15,7 +15,7 @@ AAStringSet
 }
 \description{
 A function that takes in a FASTA file path containing the sequence information
-and creates an AAStringSet object out of it
+and creates an AAStringSet object out of it.
 }
 \examples{
 # Example 1:

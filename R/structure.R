@@ -5,9 +5,9 @@
 #' @return dataframe with information on structures
 #'
 #' @examples
-#' fastaPath <- system.file("extdata", "template.fasta", package = "RhodopXin")
-#' seq <- loadSequence(fastaPath)
-#' struct_df <- find3dStructure(seq)
+#' #fastaPath <- system.file("extdata", "template.fasta", package = "RhodopXin")
+#' #seq <- loadSequence(fastaPath)
+#' #struct_df <- find3dStructure(seq)
 #'
 #' @references
 #' Korkmaz S, Yamasan B (2024). _rPDBapi: A Comprehensive Interface for Accessing the Protein

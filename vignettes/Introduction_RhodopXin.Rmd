@@ -42,25 +42,25 @@ ls("package:RhodopXin")
 
 ### Explore Structure of Rhodopsin
 ```{r, warning=FALSE}
-temp_path <- system.file("extdata", "template.fasta", package = "RhodopXin")
-temp <- loadSequence(temp_path)
-
-# Find available 3d structures of given template rhodopsin
-available_structs <- find3dStructure(temp)
-available_structs
-
-# Only load the first structure
-rcsb_id <- available_structs$rcsb_id[1]
-#loadStructure(rcsb_id)
-
-# Print the helices segment of the template rhodopsin
-findHelices(rcsb_id)
+# temp_path <- system.file("extdata", "template.fasta", package = "RhodopXin")
+# temp <- loadSequence(temp_path)
+# 
+# # Find available 3d structures of given template rhodopsin
+# available_structs <- find3dStructure(temp)
+# available_structs
+# 
+# # Only load the first structure
+# rcsb_id <- available_structs$rcsb_id[1]
+# #loadStructure(rcsb_id)
+# 
+# # Print the helices segment of the template rhodopsin
+# findHelices(rcsb_id)
 ```
 ### Pairwise Alignment with Template
-```{r}
-seqs_path <- system.file("extdata", "rhodopsins.fasta", package = "RhodopXin")
-seqs <- loadSequence(seqs_path) 
-
-createPWAlignments(temp, seqs)
+# ```{r}
+# seqs_path <- system.file("extdata", "rhodopsins.fasta", package = "RhodopXin")
+# seqs <- loadSequence(seqs_path) 
+# 
+# createPWAlignments(temp, seqs)
 # Still have to format output to something nicer
 ```
