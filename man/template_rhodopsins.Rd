@@ -50,7 +50,7 @@ template_rhodopsins
 \description{
 This is the sample AAStringSet output produced by running
 loadSequence() with the templates.fasta file located in inst/extdata. It
-contains two template rhodopsins selected from the del Val et al. study (2014):
+contains two template rhodopsins selected from the del Val et al. (2014) study:
 a bacteriorhodopsin and a chimera for channelrhodopsin 1 and 2.They
 included the RCSB PDB entries for these sequences which was then used to fetch
 their sequencing data to construct the templates.fasta file. Additionally, three

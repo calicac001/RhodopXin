@@ -35,7 +35,7 @@ sample_rhodopsins
 \description{
 This is the sample AAStringSet output produced by running
 loadSequence() with the rhodopsins.fasta file located in inst/extdata. It
-contains three rhodopsins selected from the del Val et al. study (2014) which
+contains three rhodopsins selected from the del Val et al. (2014) study  which
 originally looked at 11 channelrhodopsins in a bioinformatic perspective. They
 included the UniProt entries for the sequences which was then used to fetch the
 sequencing data to construct the rhodopsins.fasta file.

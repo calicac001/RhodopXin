@@ -2,7 +2,7 @@
 #'
 #' @description This is the sample AAStringSet output produced by running
 #' loadSequence() with the rhodopsins.fasta file located in inst/extdata. It
-#' contains three rhodopsins selected from the del Val et al. study (2014) which
+#' contains three rhodopsins selected from the del Val et al. (2014) study  which
 #' originally looked at 11 channelrhodopsins in a bioinformatic perspective. They
 #' included the UniProt entries for the sequences which was then used to fetch the
 #' sequencing data to construct the rhodopsins.fasta file.
@@ -51,7 +51,7 @@
 #'
 #' @description This is the sample AAStringSet output produced by running
 #' loadSequence() with the templates.fasta file located in inst/extdata. It
-#' contains two template rhodopsins selected from the del Val et al. study (2014):
+#' contains two template rhodopsins selected from the del Val et al. (2014) study:
 #' a bacteriorhodopsin and a chimera for channelrhodopsin 1 and 2.They
 #' included the RCSB PDB entries for these sequences which was then used to fetch
 #' their sequencing data to construct the templates.fasta file. Additionally, three

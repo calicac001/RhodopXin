@@ -16,5 +16,7 @@ dataframe
 Find Helices Positions Given RCSB ID
 }
 \references{
-Grant B.J., Rodrigues A.P.C., ElSawy K.M., McCammon J.A., Caves L.S.D. (2006). \emph{Bio3D: An R package for the comparative analysis of protein structures}. \url{http://thegrantlab.org/bio3d/}
+Grant B.J., Rodrigues A.P.C., ElSawy K.M., McCammon J.A., Caves L.S.D. (2006).
+\emph{Bio3D: An R package for the comparative analysis of protein structures}.
+\url{http://thegrantlab.org/bio3d/}
 }
