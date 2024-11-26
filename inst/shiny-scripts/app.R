@@ -2,6 +2,7 @@
 # RStudio Inc. (2013). Tabsets. Shiny Gallery. URL:https://shiny.rstudio.com/gallery/tabsets.html
 
 library(shiny)
+library(shinycssloaders)
 library(shinythemes)
 library(RhodopXin)
 
@@ -28,7 +29,8 @@ ui <- navbarPage(
         radioButtons(
           inputId = "template_type",
           label = "Choose an option:",
-          choices = c("Sample Templates", "Choose Own Template")
+          choices = c("Sample Templates", "Choose Own Template"),
+          selected = "Sample Templates"
         ),
 
         # Conditional dropdown for the sample rhodopsins
@@ -41,7 +43,8 @@ ui <- navbarPage(
                         "Channelrhodopsin (3UG9)",
                         "Halorhodopsin (3A7K)",
                         "Proteorhodopsin (4JQ6)",
-                        "Xanthorhodopsin (3DDL)")
+                        "Xanthorhodopsin (3DDL)"),
+            selected = "Bacteriorhodopsin (1QHJ)"
           )
         ),
 
@@ -92,9 +95,12 @@ ui <- navbarPage(
         ),
         fluidRow(
           # Full-width bottom section
-          column(12, uiOutput("helix_plot"))
+          column(12, div(
+            id = "loading",
+            withSpinner(plotOutput("helix_plot"), type = 4, color = "blue")
+          )
+          )
         )
-
       )
     )
   )
@@ -102,8 +108,15 @@ ui <- navbarPage(
 
 
 # Define server logic for random distribution app ----
-server <- function(input, output) {
+server <- function(input, output, session) {
+
+
   startAlignment <- eventReactive(input$run_alignment, {
+    req(input$template_type)
+    req(input$query_type)
+
+    shinyjs::show("loading")
+
     template <- NULL
     if (input$template_type == "Sample Templates"){
       template <- switch(input$template,
@@ -111,8 +124,10 @@ server <- function(input, output) {
                          "Channelrhodopsin (3UG9)" = RhodopXin::sample_rhodopsins[2],
                          "Halorhodopsin (3A7K)" = RhodopXin::sample_rhodopsins[3],
                          "Proteorhodopsin (4JQ6)" = RhodopXin::sample_rhodopsins[4],
-                         "Xanthorhodopsin (3DDL)" = RhodopXin::sample_rhodopsins[5])
+                         "Xanthorhodopsin (3DDL)" = RhodopXin::sample_rhodopsins[5],
+                         RhodopXin::sample_rhodopsins[1])
     } else if (input$template_type == "Choose Own Template"){
+      req(input$template)
       template <- RhodopXin::loadFromRCSB(input$template)
     }
 
@@ -120,6 +135,7 @@ server <- function(input, output) {
     if (input$query_type == "Sample Rhodopsins"){
       query <- RhodopXin::sample_rhodopsins
     } else if (input$query_type == "Choose Own Rhodopsin/s"){
+      req(input$file)
       query <- RhodopXin::loadSequence(input$file)
     }
 
@@ -130,7 +146,8 @@ server <- function(input, output) {
                          "Channelrhodopsin (3UG9)" = "3UG9",
                          "Halorhodopsin (3A7K)" = "3A7K",
                          "Proteorhodopsin (4JQ6)" = "4JQ6",
-                         "Xanthorhodopsin (3DDL)" = "3DDL")
+                         "Xanthorhodopsin (3DDL)" = "3DDL",
+                        "1QHJ")
     } else if (input$template_type == "Choose Own Template"){
       rcsb_id <- input$template
     }
@@ -140,11 +157,26 @@ server <- function(input, output) {
                                      rcsb_id = rcsb_id)
   })
 
-  output$query_and_helix <- renderPrint({
-    if(!is.null(startAlignment))
-      startAlignment()
 
+  plot_height <- reactive({
+    if (!is.null(startAlignment())) {
+      all_pwa <- startAlignment()
+      return(ceiling(length(all_pwa) / 2) * 200)  # Calculate height dynamically
+    }
+    return(500)  # Default height if no data
   })
+
+  output$helix_plot <- renderPlot({
+    if(!is.null(startAlignment)){
+      all_pwa <- startAlignment()
+      plot <- RhodopXin::visualizeHelixAlignments(all_pwa = all_pwa)
+      shinyjs::hide("loading")
+      return(plot)
+    }
+  }, height = function() {
+    plot_height()  # Pass the reactive plot height
+  }
+  )
 }
 
 # Create Shiny app ----
