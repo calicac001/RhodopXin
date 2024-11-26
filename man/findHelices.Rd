@@ -7,13 +7,16 @@
 findHelices(rcsb_id)
 }
 \arguments{
-\item{rcsb_id}{desc}
+\item{rcsb_id}{the RCSB accession code to find the helices from}
 }
 \value{
-dataframe
+dataframe with row names corresponding to the helices found in the
+structure i.e. 'Helix 1' ... 'Helix n' and two columns: 'start' for the start
+position of the helix in the sequence and 'end' for the end position
 }
 \description{
-Find Helices Positions Given RCSB ID
+A function that finds all the helices in a pdb structure given by an rcsb id
+and then return a dataframe for the start and end positions of each helix.
 }
 \references{
 Grant B.J., Rodrigues A.P.C., ElSawy K.M., McCammon J.A., Caves L.S.D. (2006).

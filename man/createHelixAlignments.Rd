@@ -33,17 +33,27 @@ available in R and there are no similar R packages that can implement it, this
 function performs a similar approach by identifying the helices in a given
 structure and performing pairwise alignments to each one with the sequence queries.
 }
+\examples{
+template <- template_rhodopsins[1]
+sequences <- sample_rhodopsins
+rcsb_id <- "1QHJ"
+results <- createHelixAlignments(template = template, sequences = sequences, rcsb_id = rcsb_id)
+
+}
 \references{
 Aboyoun P, Gentleman R (2024). \emph{pwalign: Perform pairwise sequence alignments}.
 doi:10.18129/B9.bioc.pwalign \url{https://doi.org/10.18129/B9.bioc.pwalign}, R
 package version 1.2.0, \url{https://bioconductor.org/packages/pwalign}.
 
 del Val, C., Royuela-Flor, J., Milenkovic, S., & Bondar, A.-N. (2014).
-Channelrhodopsins: A bioinformatics perspective. Biochimica et Biophysica Acta
+\emph{Channelrhodopsins: A bioinformatics perspective}. Biochimica et Biophysica Acta
 (BBA) - Bioenergetics, 1837(5), 643–655. https://doi.org/10.1016/j.bbabio.2013.11.005
 
-Pagès H, Aboyoun P, Gentleman R, DebRoy S (2024). \emph{Biostrings: Efficient manipulation
-of biological strings}. doi:10.18129/B9.bioc.Biostrings
+Pagès H, Aboyoun P, Gentleman R, DebRoy S (2024). _Biostrings: Efficient _
+\emph{manipulation of biological strings}. doi:10.18129/B9.bioc.Biostrings
 \url{https://doi.org/10.18129/B9.bioc.Biostrings}, R package version 2.73.1,
 \url{https://bioconductor.org/packages/Biostrings}.
+
+Wright ES (2016). _Using DECIPHER v2.0 to Analyze Big Biological _
+\emph{Data in R.} The R Journal, \emph{8}(1), 352-359.
 }

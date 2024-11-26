@@ -35,13 +35,16 @@
 #' package version 1.2.0, <https://bioconductor.org/packages/pwalign>.
 #'
 #' del Val, C., Royuela-Flor, J., Milenkovic, S., & Bondar, A.-N. (2014).
-#' Channelrhodopsins: A bioinformatics perspective. Biochimica et Biophysica Acta
+#' _Channelrhodopsins: A bioinformatics perspective_. Biochimica et Biophysica Acta
 #' (BBA) - Bioenergetics, 1837(5), 643–655. https://doi.org/10.1016/j.bbabio.2013.11.005
 #'
-#' Pagès H, Aboyoun P, Gentleman R, DebRoy S (2024). _Biostrings: Efficient manipulation
-#' of biological strings_. doi:10.18129/B9.bioc.Biostrings
+#' Pagès H, Aboyoun P, Gentleman R, DebRoy S (2024). _Biostrings: Efficient _
+#' _manipulation of biological strings_. doi:10.18129/B9.bioc.Biostrings
 #' <https://doi.org/10.18129/B9.bioc.Biostrings>, R package version 2.73.1,
 #' <https://bioconductor.org/packages/Biostrings>.
+#'
+#' Wright ES (2016). _Using DECIPHER v2.0 to Analyze Big Biological _
+#' _Data in R._ The R Journal, *8*(1), 352-359.
 #'
 #' @export
 #'
