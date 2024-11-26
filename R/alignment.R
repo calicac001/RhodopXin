@@ -86,7 +86,7 @@ createHelixAlignments <- function(template, sequences, rcsb_id){
       alignment <- pwalign::pairwiseAlignment(helices_seq[[i]], sequences[[j]], type = "local")
 
       # Extract the part of the query sequence where there is alignment
-      query_aligned <- pwalign::alignedSubject(alignment)
+      query_aligned <- pwalign::subject(alignment)
 
       # Add the aligned segment of the query to the alignments vector
       alignments <- c(alignments, query_aligned)
@@ -107,7 +107,7 @@ createHelixAlignments <- function(template, sequences, rcsb_id){
     combined_alignment <- DECIPHER::AlignSeqs(alignments)
 
     # Add names to the AAStringSet object as this got lost during alignment
-    names(combined_alignment) <- c(paste0("Helix", i, "-", ranges[i, "start"], ":", ranges[i, "end"]),
+    names(combined_alignment) <- c(paste0("Helix ", i, " - ", ranges[i, "start"], ":", ranges[i, "end"]),
                                    paste(query_names, "-", ranges[i, 3:(length(sequences)+2)]))
 
     # Append this pairwise alignment to the all_pwa list
