@@ -113,12 +113,14 @@ findHelices <- function(rcsb_id){
 #'
 #' @param rcsb_id the RCSB accession code given by the user
 #'
-#' @return TRUE if the rcsb id is valid, otherwise throw an appropriate error
+#' @return invisible null if the rcsb id is valid, otherwise throw an appropriate error
 #'
 #' @references
 #' Korkmaz S, Yamasan B (2024). _rPDBapi: A Comprehensive Interface for Accessing_
 #' _the Protein Data Bank_. R package version 2.1.1,
 #' <https://CRAN.R-project.org/package=rPDBapi>.
+#'
+#' @export
 #'
 #' @importFrom rPDBapi get_info
 
@@ -142,7 +144,7 @@ validateRcsbId <- function(rcsb_id){
   tryCatch(
     {
       rPDBapi::get_info(rcsb_id)
-      return(TRUE)
+      return(invisible(NULL))
     },
     error = function(e) {
         stop(e$message)

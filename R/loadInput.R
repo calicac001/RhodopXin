@@ -1,4 +1,4 @@
-#' Load Amino Acid Sequence Input
+#' Load Amino Acid Sequence Input from File
 #'
 #' A function that takes in a FASTA file path containing the sequence information
 #' and creates an AAStringSet object out of it.
@@ -56,4 +56,40 @@ loadSequence <- function(filePath){
   }
 }
 
+#' Load Sequence Given an RCSB PDB ID
+#'
+#' A function that takes in a RCSB pdb id and returns an AAStringSet object of
+#' the structure's sequence
+#'
+#' @param rcsb_id the RCSB accession code for the template rhodopsin to get the
+#' sequence of
+#'
+#' @return AAStringSet
+#' @references
+#' Pagès H, Aboyoun P, Gentleman R, DebRoy S (2024). _Biostrings: Efficient manipulation
+#' of biological strings_. doi:10.18129/B9.bioc.Biostrings
+#' <https://doi.org/10.18129/B9.bioc.Biostrings>, R package version 2.73.1,
+#' <https://bioconductor.org/packages/Biostrings>.
+#'
+#' @export
+#' @importFrom Biostrings AAStringSet
+#' @importFrom bio3d aa321
+loadFromRCSB <- function(rcsb_id){
+  # Get the structure given the rcsb_id. This function also validates input so
+  # no need to do here See structure.R for this function.
+  pdb_struct <- getPDBstruct(rcsb_id = rcsb_id)
+
+  # Extract the sequence
+  print(pdb_struct)
+
+  # Convert sequence from 3-letter to 1-letter code then combine to one string
+  # since the aa321 function returns a vector of characters
+  sequence <- paste0(bio3d::aa321(pdb_struct$seq), collapse = "")
+
+  # Create AAStringSet object given the input file
+  seq_set <- Biostrings::AAStringSet(sequence)
+  names(seq_set) <- rcsb_id
+
+  return(seq_set)
+}
 # [END]

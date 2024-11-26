@@ -10,7 +10,7 @@ validateRcsbId(rcsb_id)
 \item{rcsb_id}{the RCSB accession code given by the user}
 }
 \value{
-TRUE if the rcsb id is valid, otherwise throw an appropriate error
+invisible null if the rcsb id is valid, otherwise throw an appropriate error
 }
 \description{
 A function that validates the rcsb id input given by the user so that the PDB

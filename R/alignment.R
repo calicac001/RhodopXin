@@ -53,6 +53,9 @@
 
 
 createHelixAlignments <- function(template, sequences, rcsb_id){
+  # Validate the given rcsb_id. See structure.R for this function
+  validateRcsbId(rcsb_id = rcsb_id)
+
   # Get the AA sequence for each helix present in the template
   helices_seq <- helixSequences(template = template, rcsb_id = rcsb_id)
 

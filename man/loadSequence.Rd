@@ -2,7 +2,7 @@
 % Please edit documentation in R/loadInput.R
 \name{loadSequence}
 \alias{loadSequence}
-\title{Load Amino Acid Sequence Input}
+\title{Load Amino Acid Sequence Input from File}
 \usage{
 loadSequence(filePath)
 }

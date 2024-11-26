@@ -72,7 +72,7 @@ ui <- navbarPage(
         conditionalPanel(
           condition = "input.query_type == 'Choose Own Rhodopsin/s'",
           fileInput(
-            inputId = "file1",
+            inputId = "file",
             label = "Choose FASTA File",
             accept = c("text/csv", "text/comma-separated-values","text/plain",
                        ".csv", ".txt"))
@@ -103,16 +103,48 @@ ui <- navbarPage(
 
 # Define server logic for random distribution app ----
 server <- function(input, output) {
-  observeEvent(input$template,
-               "Bacteriorhodopsin (1QHJ)" = RhodopXin::sample_rhodopsins[1],
-               "Channelrhodopsin (3UG9)" = RhodopXin::sample_rhodopsins[2],
-               "Halorhodopsin (3A7K)" = RhodopXin::sample_rhodopsins[3],
-               "Proteorhodopsin (4JQ6)" = RhodopXin::sample_rhodopsins[4],
-               "Xanthorhodopsin (3DDL)" = RhodopXin::sample_rhodopsins[5])
+  startAlignment <- eventReactive(input$run_alignment, {
+    template <- NULL
+    if (input$template_type == "Sample Templates"){
+      template <- switch(input$template,
+                         "Bacteriorhodopsin (1QHJ)" = RhodopXin::sample_rhodopsins[1],
+                         "Channelrhodopsin (3UG9)" = RhodopXin::sample_rhodopsins[2],
+                         "Halorhodopsin (3A7K)" = RhodopXin::sample_rhodopsins[3],
+                         "Proteorhodopsin (4JQ6)" = RhodopXin::sample_rhodopsins[4],
+                         "Xanthorhodopsin (3DDL)" = RhodopXin::sample_rhodopsins[5])
+    } else if (input$template_type == "Choose Own Template"){
+      template <- RhodopXin::loadFromRCSB(input$template)
+    }
 
-  startAlignment <- eventReactive(eventExpr = input$run_alignment, {
+    query <- NULL
+    if (input$query_type == "Sample Rhodopsins"){
+      query <- RhodopXin::sample_rhodopsins
+    } else if (input$query_type == "Choose Own Rhodopsin/s"){
+      query <- RhodopXin::loadSequence(input$file)
+    }
 
-    #RhodopXin::createHelixAlignments()
+    rcsb_id <- NULL
+    if (input$template_type == "Sample Templates"){
+      rcsb_id <- switch(input$template,
+                         "Bacteriorhodopsin (1QHJ)" = "1QHJ",
+                         "Channelrhodopsin (3UG9)" = "3UG9",
+                         "Halorhodopsin (3A7K)" = "3A7K",
+                         "Proteorhodopsin (4JQ6)" = "4JQ6",
+                         "Xanthorhodopsin (3DDL)" = "3DDL")
+    } else if (input$template_type == "Choose Own Template"){
+      RhodopXin::validateRcsbId(input$template)
+      rcsb_id <- input$template
+    }
+
+    RhodopXin::createHelixAlignments(template = template,
+                                     sequences = query,
+                                     rcsb_id = rcsb_id)
+  })
+
+  output$query_and_helix <- renderPrint({
+    if(!is.null(startAlignment))
+      startAlignment()
+
   })
 }
 
