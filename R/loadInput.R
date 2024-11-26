@@ -76,7 +76,7 @@ loadSequence <- function(filePath){
 #' @importFrom bio3d aa321
 loadFromRCSB <- function(rcsb_id){
   # Get the structure given the rcsb_id. This function also validates input so
-  # no need to do here See structure.R for this function.
+  # no need to do here. See structure.R for this function.
   pdb_struct <- getPDBstruct(rcsb_id = rcsb_id)
 
   # Extract the sequence

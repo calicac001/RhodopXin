@@ -132,7 +132,6 @@ server <- function(input, output) {
                          "Proteorhodopsin (4JQ6)" = "4JQ6",
                          "Xanthorhodopsin (3DDL)" = "3DDL")
     } else if (input$template_type == "Choose Own Template"){
-      RhodopXin::validateRcsbId(input$template)
       rcsb_id <- input$template
     }
 

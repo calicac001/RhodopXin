@@ -120,8 +120,6 @@ findHelices <- function(rcsb_id){
 #' _the Protein Data Bank_. R package version 2.1.1,
 #' <https://CRAN.R-project.org/package=rPDBapi>.
 #'
-#' @export
-#'
 #' @importFrom rPDBapi get_info
 
 validateRcsbId <- function(rcsb_id){
