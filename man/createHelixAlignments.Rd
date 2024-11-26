@@ -50,7 +50,7 @@ del Val, C., Royuela-Flor, J., Milenkovic, S., & Bondar, A.-N. (2014).
 (BBA) - Bioenergetics, 1837(5), 643–655. https://doi.org/10.1016/j.bbabio.2013.11.005
 
 Pagès H, Aboyoun P, Gentleman R, DebRoy S (2024). _Biostrings: Efficient _
-\emph{manipulation of biological strings}. doi:10.18129/B9.bioc.Biostrings
+\emph{manipulationof biological strings}. doi:10.18129/B9.bioc.Biostrings
 \url{https://doi.org/10.18129/B9.bioc.Biostrings}, R package version 2.73.1,
 \url{https://bioconductor.org/packages/Biostrings}.
 

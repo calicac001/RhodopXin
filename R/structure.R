@@ -167,7 +167,7 @@ validateRcsbId <- function(rcsb_id){
 #' OpenAI. (2024). ChatGPT (November 2024 version). Retrieved from
 #' https://chat.openai.com
 #'
-#' @importFrom bio3d read.pdb
+#' @importFrom bio3d read.pdb get.pdb
 getPDBstruct <- function(rcsb_id){
   # Define the temporary directory and file path
   temp_path <- tempdir()
@@ -182,7 +182,8 @@ getPDBstruct <- function(rcsb_id){
     message("Downloading PDB file and saving to tempdir: ", pdb_file)
 
     # Download and save the PDB file in the temporary directory
-    pdb <- read.pdb(rcsb_id, path = temp_path)
+    bio3d::get.pdb(rcsb_id, path = temp_path)
+    pdb <- bio3d::read.pdb(rcsb_id)
   }
 
   return(pdb)

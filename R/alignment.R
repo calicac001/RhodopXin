@@ -39,7 +39,7 @@
 #' (BBA) - Bioenergetics, 1837(5), 643–655. https://doi.org/10.1016/j.bbabio.2013.11.005
 #'
 #' Pagès H, Aboyoun P, Gentleman R, DebRoy S (2024). _Biostrings: Efficient _
-#' _manipulation of biological strings_. doi:10.18129/B9.bioc.Biostrings
+#' _manipulationof biological strings_. doi:10.18129/B9.bioc.Biostrings
 #' <https://doi.org/10.18129/B9.bioc.Biostrings>, R package version 2.73.1,
 #' <https://bioconductor.org/packages/Biostrings>.
 #'
@@ -140,7 +140,6 @@ createHelixAlignments <- function(template, sequences, rcsb_id){
 #'
 #' @importClassesFrom Biostrings AAStringSet
 #' @importFrom Biostrings subseq
-
 helixSequences <- function(template, rcsb_id){
   # Get the dataframe containing the start and end positions of every helix in
   # the template
@@ -166,3 +165,4 @@ helixSequences <- function(template, rcsb_id){
   return(helices_seq)
 }
 
+# [END]
