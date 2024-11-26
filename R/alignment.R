@@ -16,10 +16,18 @@
 #' @param sequences AAStringSet of query sequences to align to the template
 #' rhodopsin's helices
 #'
+#' @param rcsb_id the RCSB accession code for the template rhodopsin to be used
+#'
 #' @return a list of AAStringSet objects containing the combined pairwise alignments
 #' of each template's helix. Each index in the list corresponds to the helix where
 #' that alignment was made e.g. the AAStringSet at index 1 corresponds to the combined
 #' pairwise alignments of all the query sequences against Helix 1
+#'
+#' @examples
+#' template <- template_rhodopsins[1]
+#' sequences <- sample_rhodopsins
+#' rcsb_id <- "1QHJ"
+#' results <- createHelixAlignments(template = template, sequences = sequences, rcsb_id = rcsb_id)
 #'
 #' @references
 #' Aboyoun P, Gentleman R (2024). _pwalign: Perform pairwise sequence alignments_.
@@ -41,16 +49,16 @@
 #' @importFrom pwalign pairwiseAlignment alignedSubject start end subject
 
 
-createHelixAlignments <- function(template, sequences){
+createHelixAlignments <- function(template, sequences, rcsb_id){
   # Get the AA sequence for each helix present in the template
-  helices_seq <- helixSegments(template = template)
+  helices_seq <- helixSequences(template = template, rcsb_id = rcsb_id)
 
   # Generate a vector for query names
   query_names <- c(paste("Query", seq_along(1:length(sequences))))
 
   # Extend the dataframe returned by findHelices to include the ranges where each
   # of the query sequences aligned with the helix of the template
-  ranges <- findHelices(substr(names(template)[[1]], 1, 4))
+  ranges <- findHelices(rcsb_id = rcsb_id)
 
   # Add a column for each query sequence that will hold the ranges where they
   # are aligned with the template helix
@@ -111,8 +119,15 @@ createHelixAlignments <- function(template, sequences){
 #'
 #' @param template AAStringSet of template rhodopsin to get helices from
 #'
+#' @param rcsb_id the RCSB accession code for the template rhodopsin to be used
+#'
 #' @return a list of AAStringSet objects containing the sequences of the template
 #' rhodopsin's helices.
+#'
+#' @examples
+#' template <- template_rhodopsins[1]
+#' rcsb_id <- "1QHJ"
+#' results <- helixSequences(template = template, rcsb_id = rcsb_id)
 #'
 #' @references
 #' Pagès H, Aboyoun P, Gentleman R, DebRoy S (2024). _Biostrings: Efficient manipulation
@@ -123,19 +138,28 @@ createHelixAlignments <- function(template, sequences){
 #' @importClassesFrom Biostrings AAStringSet
 #' @importFrom Biostrings subseq
 
-helixSegments <- function(template){
-  template_id <- substr(names(template)[[1]], 1, 4)
-  helices_df <- findHelices(template_id)
+helixSequences <- function(template, rcsb_id){
+  # Get the dataframe containing the start and end positions of every helix in
+  # the template
+  helices_df <- findHelices(rcsb_id)
 
-  segments <- list()
+  # Initialize a list that will contain all the sequence of the helices
+  helices_seq <- list()
+
+  # Loop thru each helix int the template
   for (i in 1:nrow(helices_df)) {
-    start_pos <- helices_df$start[i]
-    end_pos <- helices_df$end[i]
+    start_pos <- helices_df$start[i] # Get the start position of helix
+    end_pos <- helices_df$end[i]     # Get the end position of the helix
 
-    segment <- Biostrings::subseq(template[[1]], start=start_pos, end=end_pos)
+    # Given the positions of the sequence, extract it from the template sequence
+    # using the subseq function from BioString
+    seq <- Biostrings::subseq(template[[1]], start=start_pos, end=end_pos)
 
-    segments[[i]] <- Biostrings::AAStringSet(as.character(segment))
+    # Put the extracted sequence as an AAStringSet object and store in the list
+    helices_seq[[i]] <- Biostrings::AAStringSet(as.character(seq))
   }
 
-  return(segments)
+  # Return the list of helices sequences
+  return(helices_seq)
 }
+

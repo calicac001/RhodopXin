@@ -4,13 +4,15 @@
 \alias{createHelixAlignments}
 \title{Sequence Alignment of Template Rhodopsin to the Query Sequences}
 \usage{
-createHelixAlignments(template, sequences)
+createHelixAlignments(template, sequences, rcsb_id)
 }
 \arguments{
 \item{template}{AAStringSet of template rhodopsin to get helices from}
 
 \item{sequences}{AAStringSet of query sequences to align to the template
 rhodopsin's helices}
+
+\item{rcsb_id}{the RCSB accession code for the template rhodopsin to be used}
 }
 \value{
 a list of AAStringSet objects containing the combined pairwise alignments
