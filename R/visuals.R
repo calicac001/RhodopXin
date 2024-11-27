@@ -35,4 +35,44 @@ visualizeHelixAlignments <- function(all_pwa){
   return(combined)
 }
 
+#' Map Helix Alignment to Structure
+#'
+#' @param template_ranges the dataframe returned by createHelixAlignments()
+#'
+#' @param rcsb_id the template rhodopsin to map to
+#'
+#' @return r3dmol object
+#'
+#' @export
+#'
+#' @importFrom grDevices colorRampPalette
+#' @importFrom RColorBrewer brewer.pal
+#' @importFrom r3dmol r3dmol m_add_model m_set_style m_sel m_style_cartoon m_zoom_to m_render
+visualizeHelixMapping <- function(template_ranges, rcsb_id){
+  mapping_df <- templateMapping(template_ranges = template_ranges)
+
+  struct <- getPDBstruct(rcsb_id = rcsb_id)
+
+  viewer <- r3dmol::r3dmol() %>%
+    r3dmol::m_add_model(r3dmol::m_bio3d(struct)) %>% # Load the PDB file
+    r3dmol::m_set_style(style = r3dmol::m_style_cartoon()) # Cartoon representation
+
+  unique_queries <- unique(mapping_df$Query)
+  num_queries <- length(unique_queries)
+  query_colors <- setNames(grDevices::colorRampPalette(RColorBrewer::brewer.pal(9, "Set1"))(num_queries), unique_queries)
+
+  for (i in 1:nrow(mapping_df)){
+    viewer <- viewer %>%
+      r3dmol::m_set_style(
+        sel = r3dmol::m_sel(resi = mapping_df$absolute_start[i]:mapping_df$absolute_end[i]),
+        style = r3dmol::m_style_cartoon(color = query_colors[[mapping_df$Query[i]]])
+      )
+  }
+
+  viewer <- viewer %>%
+    r3dmol::m_zoom_to() %>%
+    r3dmol::m_render()
+
+  return(viewer)
+}
 # [END]

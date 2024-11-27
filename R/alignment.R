@@ -186,16 +186,19 @@ helixSequences <- function(template, rcsb_id){
 #'
 #' @param template_ranges the dataframe returned by createHelixAlignments()
 #'
+#' @param rcsb_id
 #' @return a process dataframe with the following columns
 #'
 #' @export
 #'
+#' @importFrom purrr map2_lgl
 #' @importFrom tibble rownames_to_column
 #' @importFrom tidyr pivot_longer
 #' @importFrom dplyr %>% mutate select starts_with
-templateMapping <- function(template_ranges){
+templateMapping <- function(template_ranges, template, rcsb_id){
+  # Adjust for numbering in alignment and correct residue position
   mapping_df <- template_ranges %>%
-    tibble::rownames_to_column(var = "Helix") %>%
+    tibble::rownames_to_column(var = "HelixName") %>%
     tidyr::pivot_longer(cols = dplyr::starts_with("Query"),
                         names_to = "Query",
                         values_to = "Range") %>%
@@ -204,8 +207,66 @@ templateMapping <- function(template_ranges){
                   absolute_start = start + relative_start - 1,
                   absolute_end = start + relative_end - 1
                   ) %>%
-    dplyr::select(Helix, Query, absolute_start, absolute_end)
+    dplyr::select(HelixName, Query, absolute_start, absolute_end)
+
+  # Adjustment for resolved structure
+  resolved_df <- resolvedMapDf(template = template, rcsb_id = rcsb_id)
+
+  mapping_df <- mapping_df %>%
+    mutate(map = purrr::map2_lgl(absolute_start, absolute_end, function(start, end) {
+      all(resolved_df$resolved[start:end] != "-")
+    }))
+
+  mapping_df$map[is.na(mapping_df$map)] <- FALSE
+
+  mapping_df <- mapping_df %>%
+    mutate(mapped_start = if_else(map, resolved_df$resolved[absolute_start], NA),
+           mapped_end = if_else(map, resolved_df$resolved[absolute_end], NA)) %>%
+    filter(map == TRUE) %>%
+    select(HelixName, Query, mapped_start, mapped_end)
 
   return(mapping_df)
+}
+
+#' Generate Mapping Dataframe of Resolved Structure
+#'
+#' @param template
+#'
+#' @param rcsb_id
+#'
+#' @importClassesFrom Biostrings AAStringSet
+#'
+#' @importFrom bio3d pdbseq
+#' @import pwalign pairwiseAlignment
+resolvedMapDf <- function(template, rcsb_id){
+  # Full sequence as given by FASTA file
+  full <- as.character(template[[1]])
+
+  # Get residues in resolved structure from pdb file
+  pdb_struct <- getPDBstruct("3UG9")
+  resolved <- paste0(bio3d::pdbseq(pdb_struct), collapse = "")
+  resolved_set <- Biostrings::AAStringSet(resolved)
+
+  alignment <- pwalign::pairwiseAlignment(template[1], resolved_set)
+
+  full_seq <- strsplit(as.character(alignment@pattern), "")[[1]]
+  resolved_seq <- as.character(alignment@subject)
+
+
+  # Find the positions of non-'-' characters
+  non_dash_indices <- which(strsplit(resolved_seq, "")[[1]] != "-")
+
+  # Create a vector with the adjusted indices
+  adjusted <- sapply(seq_along(strsplit(resolved_seq, "")[[1]]), function(i) {
+    if (strsplit(resolved_seq, "")[[1]][i] != "-") {
+      return(which(non_dash_indices == i))
+    } else {
+      return("-")
+    }
+  })
+
+  mapping <- data.frame(full = 1:length(full_seq), resolved = adjusted)
+
+  return(mapping)
 }
 # [END]
