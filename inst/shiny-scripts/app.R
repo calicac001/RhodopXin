@@ -97,7 +97,7 @@ ui <- navbarPage(
           # Full-width bottom section
           column(12, div(
             id = "loading",
-            withSpinner(plotOutput("helix_plot"), type = 4, color = "blue")
+            withSpinner(plotOutput("helix_plot"), type = 4, color = "#e95420")
           )
           )
         )
@@ -120,12 +120,12 @@ server <- function(input, output, session) {
     template <- NULL
     if (input$template_type == "Sample Templates"){
       template <- switch(input$template,
-                         "Bacteriorhodopsin (1QHJ)" = RhodopXin::sample_rhodopsins[1],
-                         "Channelrhodopsin (3UG9)" = RhodopXin::sample_rhodopsins[2],
-                         "Halorhodopsin (3A7K)" = RhodopXin::sample_rhodopsins[3],
-                         "Proteorhodopsin (4JQ6)" = RhodopXin::sample_rhodopsins[4],
-                         "Xanthorhodopsin (3DDL)" = RhodopXin::sample_rhodopsins[5],
-                         RhodopXin::sample_rhodopsins[1])
+                         "Bacteriorhodopsin (1QHJ)" = RhodopXin::template_rhodopsins[1],
+                         "Channelrhodopsin (3UG9)" = RhodopXin::template_rhodopsins[2],
+                         "Halorhodopsin (3A7K)" = RhodopXin::template_rhodopsins[3],
+                         "Proteorhodopsin (4JQ6)" = RhodopXin::template_rhodopsins[4],
+                         "Xanthorhodopsin (3DDL)" = RhodopXin::template_rhodopsins[5],
+                         RhodopXin::template_rhodopsins[1])
     } else if (input$template_type == "Choose Own Template"){
       req(input$template)
       template <- RhodopXin::loadFromRCSB(input$template)
