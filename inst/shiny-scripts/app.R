@@ -88,29 +88,25 @@ ui <- navbarPage(
 
       # Main panel for displaying outputs
       mainPanel(
-        fluidRow(
-          # Two halves on top
-          column(6, uiOutput("query_and_helix")),
-          column(6, uiOutput("helix_struct"))
-        ),
-        fluidRow(
-          # Full-width bottom section
-          column(12, div(
-            id = "loading",
-            withSpinner(plotOutput("helix_plot"), type = 4, color = "#e95420")
-          )
-          )
+        tabsetPanel(
+          tabPanel("Alignments",
+                   div(
+                     id = "loading",
+                     withSpinner(plotOutput("helix_plot"), type = 4, color = "#e95420"),)
+                   ),
+          tabPanel("Mapping")
         )
       )
     )
-  )
+  ),
+
+  tabPanel("Find Motifs"),
+  tabPanel("Sample Datasets")
 )
 
 
 # Define server logic for random distribution app ----
 server <- function(input, output, session) {
-
-
   startAlignment <- eventReactive(input$run_alignment, {
     req(input$template_type)
     req(input$query_type)
@@ -160,7 +156,8 @@ server <- function(input, output, session) {
 
   plot_height <- reactive({
     if (!is.null(startAlignment())) {
-      all_pwa <- startAlignment()
+      results <- startAlignment()
+      all_pwa <- results$all_pwa
       return(ceiling(length(all_pwa) / 2) * 200)  # Calculate height dynamically
     }
     return(500)  # Default height if no data
@@ -168,7 +165,8 @@ server <- function(input, output, session) {
 
   output$helix_plot <- renderPlot({
     if(!is.null(startAlignment)){
-      all_pwa <- startAlignment()
+      results <- startAlignment()
+      all_pwa <- results$all_pwa
       plot <- RhodopXin::visualizeHelixAlignments(all_pwa = all_pwa)
       shinyjs::hide("loading")
       return(plot)

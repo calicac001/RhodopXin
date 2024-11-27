@@ -186,7 +186,7 @@ helixSequences <- function(template, rcsb_id){
 #'
 #' @param template_ranges the dataframe returned by createHelixAlignments()
 #'
-#' @param rcsb_id
+#' @param rcsb_id desc
 #' @return a process dataframe with the following columns
 #'
 #' @export
@@ -237,7 +237,7 @@ templateMapping <- function(template_ranges, template, rcsb_id){
 #' @importClassesFrom Biostrings AAStringSet
 #'
 #' @importFrom bio3d pdbseq
-#' @import pwalign pairwiseAlignment
+#' @importFrom pwalign pairwiseAlignment
 resolvedMapDf <- function(template, rcsb_id){
   # Full sequence as given by FASTA file
   full <- as.character(template[[1]])
