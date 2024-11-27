@@ -48,7 +48,7 @@ visualizeHelixAlignments <- function(all_pwa){
 #' @export
 #'
 #' @importFrom dplyr %>% filter
-#' @importFrom r3dmol r3dmol m_add_model m_set_style m_sel m_style_cartoon m_zoom_to m_render
+#' @importFrom r3dmol r3dmol m_add_model m_set_style m_sel m_style_cartoon m_zoom_to m_render m_add_res_labels
 visualizeHelixMapping <- function(template_ranges, template, rcsb_id, query_num){
   query <- paste("Query", query_num)
 
@@ -69,7 +69,7 @@ visualizeHelixMapping <- function(template_ranges, template, rcsb_id, query_num)
     viewer <- viewer %>%
       r3dmol::m_set_style(
         sel = r3dmol::m_sel(resi = mapping_df$mapped_start[i]:mapping_df$mapped_end[i]),
-        style = r3dmol::m_style_cartoon(color = "blue")
+        style = r3dmol::m_style_cartoon(color = "#e95420")
       )
   }
 

@@ -220,8 +220,8 @@ templateMapping <- function(template_ranges, template, rcsb_id){
   mapping_df$map[is.na(mapping_df$map)] <- FALSE
 
   mapping_df <- mapping_df %>%
-    mutate(mapped_start = if_else(map, resolved_df$resolved[absolute_start], NA),
-           mapped_end = if_else(map, resolved_df$resolved[absolute_end], NA)) %>%
+    mutate(mapped_start = ifelse(map, resolved_df$resolved[absolute_start], NA),
+           mapped_end = ifelse(map, resolved_df$resolved[absolute_end], NA)) %>%
     filter(map == TRUE) %>%
     select(HelixName, Query, mapped_start, mapped_end)
 
