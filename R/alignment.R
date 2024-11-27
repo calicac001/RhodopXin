@@ -64,12 +64,17 @@ createHelixAlignments <- function(template, sequences, rcsb_id){
 
   # Extend the dataframe returned by findHelices to include the ranges where each
   # of the query sequences aligned with the helix of the template
-  ranges <- findHelices(rcsb_id = rcsb_id)
+  subject_ranges <- findHelices(rcsb_id = rcsb_id)
 
-  # Add a column for each query sequence that will hold the ranges where they
+  # Create a dataframe to store which positions in the template, each query is
+  # aligned to. will be used to map the alignments in the structure
+  template_ranges <- subject_ranges
+
+  # Add a column for each query sequence that will hold the subject_ranges where they
   # are aligned with the template helix
   for(q in query_names){
-    ranges[[q]] <- NA
+    subject_ranges[[q]] <- NA
+    template_ranges[[q]] <- NA
   }
 
   # Create a list that will hold of the pairwise alignments which will be
@@ -92,14 +97,23 @@ createHelixAlignments <- function(template, sequences, rcsb_id){
       alignments <- c(alignments, query_aligned)
 
       # Get the position where this alignment starts in the query sequence
-      start <- pwalign::start(pwalign::subject(alignment))
+      query_start <- pwalign::start(pwalign::subject(alignment))
 
       # Get the position where this alignment ends in the query sequence
-      end <- pwalign::end(pwalign::subject(alignment))
+      query_end <- pwalign::end(pwalign::subject(alignment))
 
-      # Add the start and end positions of the alignment in the ranges dataframe
+      # Add the start and end positions of the alignment in the subject_ranges dataframe
       # Add 2 in the column to skip the start and positions of the helix
-      ranges[i, j+2] <- paste0(start, ":", end)
+      subject_ranges[i, j+2] <- paste0(query_start, ":", query_end)
+
+      # Get the position where this alignment starts in the template sequence
+      template_start <- pwalign::start(pwalign::pattern(alignment))
+
+      # Get the position where this alignment ends in the template sequence
+      template_end <- pwalign::end(pwalign::pattern(alignment))
+
+      # Add the start and end positions of the alignment in the subject_ranges dataframe
+      template_ranges[i, j+2] <- paste0(template_start, ":", template_end)
     }
 
     # Combine the helix sequence with all the aligned query sequences into a
@@ -107,14 +121,14 @@ createHelixAlignments <- function(template, sequences, rcsb_id){
     combined_alignment <- DECIPHER::AlignSeqs(alignments)
 
     # Add names to the AAStringSet object as this got lost during alignment
-    names(combined_alignment) <- c(paste0("Helix ", i, " - ", ranges[i, "start"], ":", ranges[i, "end"]),
-                                   paste(query_names, "-", ranges[i, 3:(length(sequences)+2)]))
+    names(combined_alignment) <- c(paste0("Helix ", i, " - ", subject_ranges[i, "start"], ":", subject_ranges[i, "end"]),
+                                   paste(query_names, "-", subject_ranges[i, 3:(length(sequences)+2)]))
 
     # Append this pairwise alignment to the all_pwa list
     all_pwa[[i]] <- combined_alignment
   }
 
-  return(all_pwa)
+  return(list(all_pwa = all_pwa, template_ranges = template_ranges))
 }
 
 #' Get the Sequence for Each Helix of the Template
@@ -168,4 +182,30 @@ helixSequences <- function(template, rcsb_id){
   return(helices_seq)
 }
 
+#' Process Template Ranges Dataframe for Mapping
+#'
+#' @param template_ranges the dataframe returned by createHelixAlignments()
+#'
+#' @return a process dataframe with the following columns
+#'
+#' @export
+#'
+#' @importFrom tibble rownames_to_column
+#' @importFrom tidyr pivot_longer
+#' @importFrom dplyr %>% mutate select starts_with
+templateMapping <- function(template_ranges){
+  mapping_df <- template_ranges %>%
+    tibble::rownames_to_column(var = "Helix") %>%
+    tidyr::pivot_longer(cols = dplyr::starts_with("Query"),
+                        names_to = "Query",
+                        values_to = "Range") %>%
+    dplyr::mutate(relative_start = as.numeric(sapply(strsplit(Range, ":"), "[", 1)),
+                  relative_end = as.numeric(sapply(strsplit(Range, ":"), "[", 2)),
+                  absolute_start = start + relative_start - 1,
+                  absolute_end = start + relative_end - 1
+                  ) %>%
+    dplyr::select(Helix, Query, absolute_start, absolute_end)
+
+  return(mapping_df)
+}
 # [END]
