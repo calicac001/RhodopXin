@@ -11,16 +11,13 @@ loadSequence(filePath)
 containing the amino acid sequences of multiple rhodopsins.}
 }
 \value{
-AAStringSet
+AAStringSet of the sequences in the FASTA file
 }
 \description{
 A function that takes in a FASTA file path containing the sequence information
 and creates an AAStringSet object out of it.
 }
 \examples{
-# Example 1:
-# Using a fasta file as input
-
 # Define the path to the fasta file (this one is included in the package)
 fastaPath <- system.file("extdata", "rhodopsins.fasta", package = "RhodopXin")
 seq <- loadSequence(fastaPath)

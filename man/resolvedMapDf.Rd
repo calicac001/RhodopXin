@@ -7,10 +7,41 @@
 resolvedMapDf(template, rcsb_id)
 }
 \arguments{
-\item{template}{}
+\item{template}{AAStringSet of template rhodopsin to get helices from}
 
-\item{rcsb_id}{}
+\item{rcsb_id}{the RCSB accession code for the template rhodopsin used}
+}
+\value{
+a dataframe with two columns:
+\describe{
+\item{full}{the numbering of residues in the full sequence of the template}
+\item{resolved}{the corresponding numbering of positions in the resolved
+structure taking into account the missing residues}
+}
 }
 \description{
-Generate Mapping Dataframe of Resolved Structure
+This function creates a dataframe containing the the residue numbers in the full
+sequence of the template and the corresponding residue numbers in the resolved
+structure when missing residues are taken into account.
+}
+\examples{
+template <- template_rhodopsins[1]
+rcsb_id <- "1QHJ"
+
+result <- resolvedMapDf(template = template, rcsb_id = rcsb_id)
+
+}
+\references{
+Aboyoun P, Gentleman R (2024). \emph{pwalign: Perform pairwise sequence alignments}.
+doi:10.18129/B9.bioc.pwalign \url{https://doi.org/10.18129/B9.bioc.pwalign}, R package version
+1.2.0, \url{https://bioconductor.org/packages/pwalign}.
+
+Grant B.J., Rodrigues A.P.C., ElSawy K.M., McCammon J.A., Caves L.S.D. (2006).
+\emph{Bio3D: An R package for the comparative analysis of protein structures}.
+\url{http://thegrantlab.org/bio3d/}
+
+Pagès H, Aboyoun P, Gentleman R, DebRoy S (2024). \emph{Biostrings: Efficient manipulation of}
+\emph{biological strings}. doi:10.18129/B9.bioc.Biostrings
+\url{https://doi.org/10.18129/B9.bioc.Biostrings}, R package version 2.73.1,
+\url{https://bioconductor.org/packages/Biostrings}.
 }

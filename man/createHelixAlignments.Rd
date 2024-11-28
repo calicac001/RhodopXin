@@ -15,10 +15,25 @@ rhodopsin's helices}
 \item{rcsb_id}{the RCSB accession code for the template rhodopsin to be used}
 }
 \value{
-a list of AAStringSet objects containing the combined pairwise alignments
+returns a list containing two objects:
+\describe{
+\item{all_pwa}{a list of AAStringSet objects containing the combined pairwise alignments
 of each template's helix. Each index in the list corresponds to the helix where
 that alignment was made e.g. the AAStringSet at index 1 corresponds to the combined
-pairwise alignments of all the query sequences against Helix 1
+pairwise alignments of all the query sequences against Helix 1}
+\item{template_ranges}{a dataframe containing information on which positions
+of the template sequence the queries where aligned to. It has the following
+format:
+\describe{
+\item{rownames}{Name of the helix e.g. Helix 1}
+\item{start}{start position of helixin template sequence}
+\item{end}{end position of helix in template sequence}
+\item{Query #}{Have a column for each query containing the ranges for
+which they have alignment to the template. Ranges are in the string format
+'start:end'.}
+}
+}
+}
 }
 \description{
 A function that performs pairwise alignment between each of the template

@@ -18,10 +18,25 @@
 #'
 #' @param rcsb_id the RCSB accession code for the template rhodopsin to be used
 #'
-#' @return a list of AAStringSet objects containing the combined pairwise alignments
-#' of each template's helix. Each index in the list corresponds to the helix where
-#' that alignment was made e.g. the AAStringSet at index 1 corresponds to the combined
-#' pairwise alignments of all the query sequences against Helix 1
+#' @return returns a list containing two objects:
+#' \describe{
+#'  \item{all_pwa}{a list of AAStringSet objects containing the combined pairwise alignments
+#'  of each template's helix. Each index in the list corresponds to the helix where
+#'  that alignment was made e.g. the AAStringSet at index 1 corresponds to the combined
+#'  pairwise alignments of all the query sequences against Helix 1}
+#'  \item{template_ranges}{a dataframe containing information on which positions
+#'  of the template sequence the queries where aligned to. It has the following
+#'  format:
+#'    \describe{
+#'        \item{rownames}{Name of the helix e.g. Helix 1}
+#'        \item{start}{start position of helixin template sequence}
+#'        \item{end}{end position of helix in template sequence}
+#'        \item{Query #}{Have a column for each query containing the ranges for
+#'        which they have alignment to the template. Ranges are in the string format
+#'        'start:end'.}
+#'    }
+#'  }
+#' }
 #'
 #' @examples
 #' template <- template_rhodopsins[1]
@@ -50,8 +65,6 @@
 #'
 #' @importFrom DECIPHER AlignSeqs
 #' @importFrom pwalign pairwiseAlignment alignedSubject start end subject
-
-
 createHelixAlignments <- function(template, sequences, rcsb_id){
   # Validate the given rcsb_id. See structure.R for this function
   validateRcsbId(rcsb_id = rcsb_id)
@@ -66,7 +79,7 @@ createHelixAlignments <- function(template, sequences, rcsb_id){
   # of the query sequences aligned with the helix of the template
   subject_ranges <- findHelices(rcsb_id = rcsb_id)
 
-  # Create a dataframe to store which positions in the template, each query is
+  # Create a dataframe to store which positions in the template each query is
   # aligned to. will be used to map the alignments in the structure
   template_ranges <- subject_ranges
 
@@ -184,10 +197,52 @@ helixSequences <- function(template, rcsb_id){
 
 #' Process Template Ranges Dataframe for Mapping
 #'
-#' @param template_ranges the dataframe returned by createHelixAlignments()
+#' The rannges returned by template_ranges of createHelixAlignments need to be processed
+#' because they do not correspond to the absolute ranges during alignment i.e. taking
+#' into account the whole length of the sequence and not just the helix it was aligned to.
+#' Additionally, the resolved structure of the template may be missing some residues
+#' so the absolute positions to the full sequence may again nedd to be adjusted
+#' to take into account the missing residues in the structure.
 #'
-#' @param rcsb_id desc
-#' @return a process dataframe with the following columns
+#' This function processes the dataframe so it reflects the mapping positions of the
+#' alignments to the template's resolved structure.
+#'
+#' @param template_ranges the dataframe template_ranges returned by createHelixAlignments()
+#'
+#' @param template AAStringSet of template rhodopsin to get helices from
+#'
+#' @param rcsb_id the RCSB accession code for the template rhodopsin used
+#'
+#' @return a processed template_ranges dataframe with the following columns:
+#' \describe{
+#'  \item{Helix}{name of the helix where this alignment occurs}
+#'  \item{Query}{name of query this alignment belongs to}
+#'  \item{mapped_start}{the residue start positions mapped to the resolved structure}
+#'  \item{mapped_end}{the residue end positions mapped to the resolved structure}
+#' }
+#'
+#' @examples
+#' # Create the alignments first
+#' template <- template_rhodopsins[1]
+#' sequences <- sample_rhodopsins
+#' rcsb_id <- "1QHJ"
+#' results <- createHelixAlignments(template = template, sequences = sequences, rcsb_id = rcsb_id)
+#'
+#' # Run the mapping
+#' template_ranges <- results$template_ranges
+#' results <- templateMapping(template_ranges = template_ranges, template = template, rcsb_id = rcsb_id)
+#'
+#' @references
+#' Müller K, Wickham H (2023). _tibble: Simple Data Frames_. R package version 3.2.1,
+#' <https://CRAN.R-project.org/package=tibble>.
+#'
+#' Wickham H, François R, Henry L, Müller K, Vaughan D (2023). _dplyr: A Grammar of Data
+#' Manipulation_. R package version 1.1.4, <https://CRAN.R-project.org/package=dplyr>.
+#' Wickham H, Henry L (2023). _purrr: Functional Programming Tools_. R package version 1.0.2,
+#' <https://CRAN.R-project.org/package=purrr>.
+#'
+#' Wickham H, Vaughan D, Girlich M (2024). _tidyr: Tidy Messy Data_. R package version 1.3.1,
+#' <https://CRAN.R-project.org/package=tidyr>.
 #'
 #' @export
 #'
@@ -209,7 +264,7 @@ templateMapping <- function(template_ranges, template, rcsb_id){
                   ) %>%
     dplyr::select(HelixName, Query, absolute_start, absolute_end)
 
-  # Adjustment for resolved structure
+  # Adjustment for resolved structure, get the mapping dataframe
   resolved_df <- resolvedMapDf(template = template, rcsb_id = rcsb_id)
 
   mapping_df <- mapping_df %>%
@@ -230,12 +285,42 @@ templateMapping <- function(template_ranges, template, rcsb_id){
 
 #' Generate Mapping Dataframe of Resolved Structure
 #'
-#' @param template
+#' This function creates a dataframe containing the the residue numbers in the full
+#' sequence of the template and the corresponding residue numbers in the resolved
+#' structure when missing residues are taken into account.
 #'
-#' @param rcsb_id
+#' @param template AAStringSet of template rhodopsin to get helices from
+#'
+#' @param rcsb_id the RCSB accession code for the template rhodopsin used
+#'
+#' @return a dataframe with two columns:
+#' \describe{
+#'    \item{full}{the numbering of residues in the full sequence of the template}
+#'    \item{resolved}{the corresponding numbering of positions in the resolved
+#'    structure taking into account the missing residues}
+#' }
+#'
+#' @examples
+#' template <- template_rhodopsins[1]
+#' rcsb_id <- "1QHJ"
+#'
+#' result <- resolvedMapDf(template = template, rcsb_id = rcsb_id)
+#'
+#' @references
+#' Aboyoun P, Gentleman R (2024). _pwalign: Perform pairwise sequence alignments_.
+#' doi:10.18129/B9.bioc.pwalign <https://doi.org/10.18129/B9.bioc.pwalign>, R package version
+#' 1.2.0, <https://bioconductor.org/packages/pwalign>.
+#'
+#' Grant B.J., Rodrigues A.P.C., ElSawy K.M., McCammon J.A., Caves L.S.D. (2006).
+#' _Bio3D: An R package for the comparative analysis of protein structures_.
+#' <http://thegrantlab.org/bio3d/>
+#'
+#' Pagès H, Aboyoun P, Gentleman R, DebRoy S (2024). _Biostrings: Efficient manipulation of_
+#' _biological strings_. doi:10.18129/B9.bioc.Biostrings
+#' <https://doi.org/10.18129/B9.bioc.Biostrings>, R package version 2.73.1,
+#' <https://bioconductor.org/packages/Biostrings>.
 #'
 #' @importClassesFrom Biostrings AAStringSet
-#'
 #' @importFrom bio3d pdbseq
 #' @importFrom pwalign pairwiseAlignment
 resolvedMapDf <- function(template, rcsb_id){
@@ -247,11 +332,11 @@ resolvedMapDf <- function(template, rcsb_id){
   resolved <- paste0(bio3d::pdbseq(pdb_struct), collapse = "")
   resolved_set <- Biostrings::AAStringSet(resolved)
 
+  # Align the full sequence and resolved sequence to identify whats missing
   alignment <- pwalign::pairwiseAlignment(template[1], resolved_set)
 
   full_seq <- strsplit(as.character(alignment@pattern), "")[[1]]
   resolved_seq <- as.character(alignment@subject)
-
 
   # Find the positions of non-'-' characters
   non_dash_indices <- which(strsplit(resolved_seq, "")[[1]] != "-")
@@ -265,8 +350,10 @@ resolvedMapDf <- function(template, rcsb_id){
     }
   })
 
+  # create the mapping dataframe
   mapping <- data.frame(full = 1:length(full_seq), resolved = adjusted)
 
   return(mapping)
 }
+
 # [END]

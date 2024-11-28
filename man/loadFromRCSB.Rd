@@ -11,13 +11,21 @@ loadFromRCSB(rcsb_id)
 sequence of}
 }
 \value{
-AAStringSet
+AAStringSet of the sequence with the given rcsb_id
 }
 \description{
 A function that takes in a RCSB pdb id and returns an AAStringSet object of
 the structure's sequence
 }
+\examples{
+seq <- loadFromRCSB("3UG9")
+
+}
 \references{
+Grant B.J., Rodrigues A.P.C., ElSawy K.M., McCammon J.A., Caves L.S.D. (2006).
+\emph{Bio3D: An R package for the comparative analysis of protein structures}.
+\url{http://thegrantlab.org/bio3d/}
+
 Pagès H, Aboyoun P, Gentleman R, DebRoy S (2024). \emph{Biostrings: Efficient manipulation
 of biological strings}. doi:10.18129/B9.bioc.Biostrings
 \url{https://doi.org/10.18129/B9.bioc.Biostrings}, R package version 2.73.1,

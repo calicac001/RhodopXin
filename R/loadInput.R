@@ -6,12 +6,9 @@
 #' @param filePath A string input corresponding to a a FASTA file path
 #' containing the amino acid sequences of multiple rhodopsins.
 #'
-#' @return AAStringSet
+#' @return AAStringSet of the sequences in the FASTA file
 #'
 #' @examples
-#' # Example 1:
-#' # Using a fasta file as input
-#'
 #' # Define the path to the fasta file (this one is included in the package)
 #' fastaPath <- system.file("extdata", "rhodopsins.fasta", package = "RhodopXin")
 #' seq <- loadSequence(fastaPath)
@@ -24,7 +21,6 @@
 #'
 #' @export
 #' @importFrom Biostrings readAAStringSet
-#'
 loadSequence <- function(filePath){
   # Check if filePath is a character
   if (!is.character(filePath)) {
@@ -64,14 +60,23 @@ loadSequence <- function(filePath){
 #' @param rcsb_id the RCSB accession code for the template rhodopsin to get the
 #' sequence of
 #'
-#' @return AAStringSet
+#' @return AAStringSet of the sequence with the given rcsb_id
+#'
+#' @examples
+#' seq <- loadFromRCSB("3UG9")
+#'
 #' @references
+#' Grant B.J., Rodrigues A.P.C., ElSawy K.M., McCammon J.A., Caves L.S.D. (2006).
+#' _Bio3D: An R package for the comparative analysis of protein structures_.
+#' <http://thegrantlab.org/bio3d/>
+#'
 #' Pagès H, Aboyoun P, Gentleman R, DebRoy S (2024). _Biostrings: Efficient manipulation
 #' of biological strings_. doi:10.18129/B9.bioc.Biostrings
 #' <https://doi.org/10.18129/B9.bioc.Biostrings>, R package version 2.73.1,
 #' <https://bioconductor.org/packages/Biostrings>.
 #'
 #' @export
+#'
 #' @importFrom Biostrings AAStringSet
 #' @importFrom bio3d aa321
 loadFromRCSB <- function(rcsb_id){
@@ -92,4 +97,5 @@ loadFromRCSB <- function(rcsb_id){
 
   return(seq_set)
 }
+
 # [END]

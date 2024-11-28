@@ -7,13 +7,54 @@
 templateMapping(template_ranges, template, rcsb_id)
 }
 \arguments{
-\item{template_ranges}{the dataframe returned by createHelixAlignments()}
+\item{template_ranges}{the dataframe template_ranges returned by createHelixAlignments()}
 
-\item{rcsb_id}{desc}
+\item{template}{AAStringSet of template rhodopsin to get helices from}
+
+\item{rcsb_id}{the RCSB accession code for the template rhodopsin used}
 }
 \value{
-a process dataframe with the following columns
+a processed template_ranges dataframe with the following columns:
+\describe{
+\item{Helix}{name of the helix where this alignment occurs}
+\item{Query}{name of query this alignment belongs to}
+\item{mapped_start}{the residue start positions mapped to the resolved structure}
+\item{mapped_end}{the residue end positions mapped to the resolved structure}
+}
 }
 \description{
-Process Template Ranges Dataframe for Mapping
+The rannges returned by template_ranges of createHelixAlignments need to be processed
+because they do not correspond to the absolute ranges during alignment i.e. taking
+into account the whole length of the sequence and not just the helix it was aligned to.
+Additionally, the resolved structure of the template may be missing some residues
+so the absolute positions to the full sequence may again nedd to be adjusted
+to take into account the missing residues in the structure.
+}
+\details{
+This function processes the dataframe so it reflects the mapping positions of the
+alignments to the template's resolved structure.
+}
+\examples{
+# Create the alignments first
+template <- template_rhodopsins[1]
+sequences <- sample_rhodopsins
+rcsb_id <- "1QHJ"
+results <- createHelixAlignments(template = template, sequences = sequences, rcsb_id = rcsb_id)
+
+# Run the mapping
+template_ranges <- results$template_ranges
+results <- templateMapping(template_ranges = template_ranges, template = template, rcsb_id = rcsb_id)
+
+}
+\references{
+Müller K, Wickham H (2023). \emph{tibble: Simple Data Frames}. R package version 3.2.1,
+\url{https://CRAN.R-project.org/package=tibble}.
+
+Wickham H, François R, Henry L, Müller K, Vaughan D (2023). \emph{dplyr: A Grammar of Data
+Manipulation}. R package version 1.1.4, \url{https://CRAN.R-project.org/package=dplyr}.
+Wickham H, Henry L (2023). \emph{purrr: Functional Programming Tools}. R package version 1.0.2,
+\url{https://CRAN.R-project.org/package=purrr}.
+
+Wickham H, Vaughan D, Girlich M (2024). \emph{tidyr: Tidy Messy Data}. R package version 1.3.1,
+\url{https://CRAN.R-project.org/package=tidyr}.
 }
