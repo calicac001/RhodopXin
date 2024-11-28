@@ -9,6 +9,8 @@ visualizeHelixMapping(template_ranges, template, rcsb_id, query_num)
 \arguments{
 \item{template_ranges}{the dataframe template_ranges returned by createHelixAlignments()}
 
+\item{template}{AAStringSet of template rhodopsin}
+
 \item{rcsb_id}{tthe RCSB accession code of the template rhodopsin}
 
 \item{query_num}{the number of query which to highligh in the structure. Follows
@@ -27,11 +29,13 @@ residues in to the 3D structure of the given template rhodopsin.
 template <- template_rhodopsins[1]
 sequences <- sample_rhodopsins
 rcsb_id <- "1QHJ"
-pwa_results <- createHelixAlignments(template = template, sequences = sequences, rcsb_id = rcsb_id)
+pwa_results <- createHelixAlignments(template = template,
+sequences = sequences, rcsb_id = rcsb_id)
 
 # Visualize the alignments
 template_ranges <- pwa_results$template_ranges
-result <- visualizeHelixMapping(template_ranges = template_ranges, template = template, rcsb_id = rcsb_id, query_num = 1)
+visualizeHelixMapping(template_ranges = template_ranges,
+template = template, rcsb_id = rcsb_id, query_num = 1)
 
 }
 \references{

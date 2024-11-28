@@ -22,7 +22,7 @@ of each template's helix. Each index in the list corresponds to the helix where
 that alignment was made e.g. the AAStringSet at index 1 corresponds to the combined
 pairwise alignments of all the query sequences against Helix 1}
 \item{template_ranges}{a dataframe containing information on which positions
-of the template sequence the queries where aligned to. It has the following
+of the query sequence were aligned to the helix. It has the following
 format:
 \describe{
 \item{rownames}{Name of the helix e.g. Helix 1}

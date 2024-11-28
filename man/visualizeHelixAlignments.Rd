@@ -17,7 +17,7 @@ a combined visual of all the helix alignments in one plot.
 \description{
 A function that takes the output of createHelixAlignments() and create visual
 representations of the alignments. This combines all of the helices alignments
-in one plot. For each helix plot, we have the helix sequence of the query aligned with
+in one plot. For each helix plot, we have the helix sequence of the template aligned with
 the query sequences. The left hand side of this plot shows which residue number
 this alignment comes from as well as which query. Additionally, a sequence logo
 and a consensus plot of the alignment is present on the top and bottom of the plot.
@@ -31,11 +31,11 @@ pwa_results <- createHelixAlignments(template = template, sequences = sequences,
 
 # Visualize the alignments
 all_pwa <- pwa_results$all_pwa
-result <- visualizeHelixAlignments(all_pwa = all_pwa)
+#isualizeHelixAlignments(all_pwa = all_pwa)
 
 # Note that output may look distorted/squished when run in a markdown file,
 # best to view it in the shiny app of this package. If not, adjust the
-fig.height or the R chunk.
+# fig.height of the R chunk.
 
 }
 \references{

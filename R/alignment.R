@@ -157,11 +157,6 @@ createHelixAlignments <- function(template, sequences, rcsb_id){
 #' @return a list of AAStringSet objects containing the sequences of the template
 #' rhodopsin's helices.
 #'
-#' @examples
-#' template <- template_rhodopsins[1]
-#' rcsb_id <- "1QHJ"
-#' results <- helixSequences(template = template, rcsb_id = rcsb_id)
-#'
 #' @references
 #' Pagès H, Aboyoun P, Gentleman R, DebRoy S (2024). _Biostrings: Efficient manipulation
 #' of biological strings_. doi:10.18129/B9.bioc.Biostrings
@@ -220,17 +215,6 @@ helixSequences <- function(template, rcsb_id){
 #'  \item{mapped_start}{the residue start positions mapped to the resolved structure}
 #'  \item{mapped_end}{the residue end positions mapped to the resolved structure}
 #' }
-#'
-#' @examples
-#' # Create the alignments first
-#' template <- template_rhodopsins[1]
-#' sequences <- sample_rhodopsins
-#' rcsb_id <- "1QHJ"
-#' results <- createHelixAlignments(template = template, sequences = sequences, rcsb_id = rcsb_id)
-#'
-#' # Run the mapping
-#' template_ranges <- results$template_ranges
-#' results <- templateMapping(template_ranges = template_ranges, template = template, rcsb_id = rcsb_id)
 #'
 #' @references
 #' Müller K, Wickham H (2023). _tibble: Simple Data Frames_. R package version 3.2.1,
@@ -298,12 +282,6 @@ templateMapping <- function(template_ranges, template, rcsb_id){
 #'    \item{resolved}{the corresponding numbering of positions in the resolved
 #'    structure taking into account the missing residues}
 #' }
-#'
-#' @examples
-#' template <- template_rhodopsins[1]
-#' rcsb_id <- "1QHJ"
-#'
-#' result <- resolvedMapDf(template = template, rcsb_id = rcsb_id)
 #'
 #' @references
 #' Aboyoun P, Gentleman R (2024). _pwalign: Perform pairwise sequence alignments_.

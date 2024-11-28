@@ -20,12 +20,6 @@ A function that returns a list of AAString objects containing the sequence
 info of the given template rhodopsin's helices. The order in the list
 corresponds to the order the helices were found in the original sequence.
 }
-\examples{
-template <- template_rhodopsins[1]
-rcsb_id <- "1QHJ"
-results <- helixSequences(template = template, rcsb_id = rcsb_id)
-
-}
 \references{
 Pagès H, Aboyoun P, Gentleman R, DebRoy S (2024). \emph{Biostrings: Efficient manipulation
 of biological strings}. doi:10.18129/B9.bioc.Biostrings

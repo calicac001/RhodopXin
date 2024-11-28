@@ -24,13 +24,6 @@ This function creates a dataframe containing the the residue numbers in the full
 sequence of the template and the corresponding residue numbers in the resolved
 structure when missing residues are taken into account.
 }
-\examples{
-template <- template_rhodopsins[1]
-rcsb_id <- "1QHJ"
-
-result <- resolvedMapDf(template = template, rcsb_id = rcsb_id)
-
-}
 \references{
 Aboyoun P, Gentleman R (2024). \emph{pwalign: Perform pairwise sequence alignments}.
 doi:10.18129/B9.bioc.pwalign \url{https://doi.org/10.18129/B9.bioc.pwalign}, R package version

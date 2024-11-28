@@ -22,11 +22,11 @@
 #'
 #' # Visualize the alignments
 #' all_pwa <- pwa_results$all_pwa
-#' result <- visualizeHelixAlignments(all_pwa = all_pwa)
+#' #isualizeHelixAlignments(all_pwa = all_pwa)
 #'
 #' # Note that output may look distorted/squished when run in a markdown file,
 #' # best to view it in the shiny app of this package. If not, adjust the
-#' fig.height or the R chunk.
+#' # fig.height of the R chunk.
 #'
 #' @references
 #' H. Wickham. _ggplot2: Elegant Graphics for Data Analysis_. Springer-Verlag New York, 2016.
@@ -82,6 +82,8 @@ visualizeHelixAlignments <- function(all_pwa){
 #'
 #' @param template_ranges the dataframe template_ranges returned by createHelixAlignments()
 #'
+#' @param template AAStringSet of template rhodopsin
+#'
 #' @param rcsb_id tthe RCSB accession code of the template rhodopsin
 #'
 #' @param query_num the number of query which to highligh in the structure. Follows
@@ -95,11 +97,13 @@ visualizeHelixAlignments <- function(all_pwa){
 #' template <- template_rhodopsins[1]
 #' sequences <- sample_rhodopsins
 #' rcsb_id <- "1QHJ"
-#' pwa_results <- createHelixAlignments(template = template, sequences = sequences, rcsb_id = rcsb_id)
+#' pwa_results <- createHelixAlignments(template = template,
+#' sequences = sequences, rcsb_id = rcsb_id)
 #'
 #' # Visualize the alignments
 #' template_ranges <- pwa_results$template_ranges
-#' result <- visualizeHelixMapping(template_ranges = template_ranges, template = template, rcsb_id = rcsb_id, query_num = 1)
+#' visualizeHelixMapping(template_ranges = template_ranges,
+#' template = template, rcsb_id = rcsb_id, query_num = 1)
 #'
 #' @references
 #' Su W, Johnston B (2024). _r3dmol: Create Interactive 3D Visualizations of Molecular Data_.

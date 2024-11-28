@@ -8,8 +8,8 @@ test_that("createHelixAlignments() returns a list of AAStringSet objects", {
 
   results <- createHelixAlignments(template = template, sequences = sequences,
                                     rcsb_id = rcsb_id)
-  expect_type(results, "list")
-  expect_true(all(sapply(results, inherits, "AAStringSet")))
+  expect_type(results$all_pwa, "list")
+  expect_true(all(sapply(results$all_pwa, inherits, "AAStringSet")))
 })
 
 test_that("createHelixAlignments() returns the correct number of AAStringSet Objects", {
@@ -19,14 +19,14 @@ test_that("createHelixAlignments() returns the correct number of AAStringSet Obj
 
   results <- createHelixAlignments(template = template, sequences = sequences,
                                     rcsb_id = rcsb_id)
-  expect_length(results, 7)
+  expect_length(results$all_pwa, 7)
 
   template <- template_rhodopsins[2]
   rcsb_id <- "3UG9"
 
   results <- createHelixAlignments(template = template, sequences = sequences,
                                     rcsb_id = rcsb_id)
-  expect_length(results, 9)
+  expect_length(results$all_pwa, 9)
 })
 
 test_that("createHelixAlignments() returns the AAStringSet objects with the correct
@@ -37,7 +37,7 @@ test_that("createHelixAlignments() returns the AAStringSet objects with the corr
 
   results <- createHelixAlignments(template = template, sequences = sequences,
                             rcsb_id = rcsb_id)
-  expect_true(all(sapply(results, length) == 4))
+  expect_true(all(sapply(results$all_pwa, length) == 4))
 })
 
 # Test helixSequences()

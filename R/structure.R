@@ -9,9 +9,6 @@
 #' structure i.e. 'Helix 1' ... 'Helix n' and two columns: 'start' for the start
 #' position of the helix in the sequence and 'end' for the end position
 #'
-#' @examples
-#' result <- findHelices(rcsb_id = "3UG9")
-#'
 #' @references
 #' Grant B.J., Rodrigues A.P.C., ElSawy K.M., McCammon J.A., Caves L.S.D. (2006).
 #' _Bio3D: An R package for the comparative analysis of protein structures_.
@@ -43,9 +40,6 @@ findHelices <- function(rcsb_id){
 #' @param rcsb_id the RCSB accession code given by the user
 #'
 #' @return invisible null if the rcsb id is valid, otherwise throw an appropriate error
-#'
-#' @examples
-#' result <- validateRcsbId("3UG9")
 #'
 #' @references
 #' Korkmaz S, Yamasan B (2024). _rPDBapi: A Comprehensive Interface for Accessing_
@@ -91,9 +85,6 @@ validateRcsbId <- function(rcsb_id){
 #' @param rcsb_id the RCSB accession code given by the user
 #'
 #' @return pdb class (see ?rPDBapi::read.pdb for specific info on components)
-#'
-#' @examples
-#' result <- getPDBstruct("3UG9")
 #'
 #' @references
 #' Grant B.J., Rodrigues A.P.C., ElSawy K.M., McCammon J.A., Caves L.S.D. (2006).

@@ -34,18 +34,6 @@ to take into account the missing residues in the structure.
 This function processes the dataframe so it reflects the mapping positions of the
 alignments to the template's resolved structure.
 }
-\examples{
-# Create the alignments first
-template <- template_rhodopsins[1]
-sequences <- sample_rhodopsins
-rcsb_id <- "1QHJ"
-results <- createHelixAlignments(template = template, sequences = sequences, rcsb_id = rcsb_id)
-
-# Run the mapping
-template_ranges <- results$template_ranges
-results <- templateMapping(template_ranges = template_ranges, template = template, rcsb_id = rcsb_id)
-
-}
 \references{
 Müller K, Wickham H (2023). \emph{tibble: Simple Data Frames}. R package version 3.2.1,
 \url{https://CRAN.R-project.org/package=tibble}.

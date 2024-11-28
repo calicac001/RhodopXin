@@ -1,5 +1,5 @@
 ---
-title: "RhodopXin Tutorial"
+title: "RhodopXinTutorial"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{RhodopXinTutorial}
@@ -133,8 +133,11 @@ suppressed in this chunk because the plotting function used keeps throwing a
 warning although plots are unaffected. Lastly, the figures may appear squished
 but this is due to the rendering of the markdown. Thus, it is recommended to run
 this function in the R Shiny app because there, the size is configured for any input.
+
+For some reason, the output cannot be displayed when building the vignettes, so
+I commented it out, but it works fine if run as an .Rmd alone.
 ```{r, warning=FALSE, fig.height=10, fig.width=8}
-visualizeHelixAlignments(alignments$all_pwa)
+#visualizeHelixAlignments(alignments$all_pwa)
 ```
 
 ### Visualize Helix Mapping

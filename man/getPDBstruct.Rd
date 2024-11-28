@@ -17,10 +17,6 @@ A function to retrieve the pdb file given an rcsb id. Stores the pdb file in
 a temporary directory. The package deals with all this so the user does not have
 to manually manage and download the pdb files themselves.
 }
-\examples{
-result <- getPDBstruct("3UG9")
-
-}
 \references{
 Grant B.J., Rodrigues A.P.C., ElSawy K.M., McCammon J.A., Caves L.S.D. (2006).
 \emph{Bio3D: An R package for the comparative analysis of protein structures}.
