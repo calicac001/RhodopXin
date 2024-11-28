@@ -1,0 +1,162 @@
+---
+title: "RhodopXin Tutorial"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{RhodopXinTutorial}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.align = "center",
+  fig.height = 5,
+  fig.width = 7,
+  out.width = "100%"
+)
+```
+
+## Introduction
+
+`Rhodopxin` is an R package designed for the exploratory analysis and visualization of rhodopsin protein structures, focusing on template-based helix alignments and mapping these alignments onto 3D structures of well-characterized template rhodopsins.
+
+To download **RhodopXin**, use the following commands:
+
+```{r, eval=FALSE}
+require("devtools")
+devtools::install_github("calicac001/RhodopXin", build_vignettes = TRUE)
+```
+
+Use the following command to load and attach the package.
+
+```{r setup}
+library(RhodopXin)
+```
+
+To list all functions available in the package:
+```{r, eval=FALSE}
+ls("package:RhodopXin")
+```
+
+To list all sample datasets available in the package:
+```{r, r, eval=FALSE}
+data(package = "RhodopXin")
+```
+
+## Loading Input
+
+`RhodopXin` works on the amino acid sequences of two following inputs: 
+- template rhodopsin: a well-characterized rhodopsin with a resolved structure
+- list of query rhodopsins: the subject of sequence alingment ad structure mapping
+
+`RhodopXin` can take in a FASTA file containing either the sequences of the 
+template rhodopsin or the query rhodopsins and process it to be used by the package.
+Below is an example of loading the two .fasta files provided in `Rhodopxin`.
+
+### Template Rhodopsins
+This file contains five template rhodopsins which are all microbial. The first two 
+template rhodopsins were selected from the del Val et al. (2014) study. the first
+one is a bacteriorhodopsin while the second one is a chimera for channelrhodopsin 
+1 and 2. Additionally, the other three template rhodopsins are a type of halorhodopsin, 
+proteorhodopsin and xanthorhodopsin. (See ?template_rhodopsins for more details)
+```{r}
+# Define the path to the fasta file
+templatePath <- system.file("extdata", "templates.fasta", package = "RhodopXin")
+template <- loadSequence(templatePath)
+template
+```
+
+### Sample Query Rhodopsins
+This file contains three rhodopsin variant selected from the del Val et al. (2014) 
+study  which originally looked at 11 channelrhodopsins in a bioinformatic perspective.
+```{r}
+# Define the path to the fasta file
+samplePath <- system.file("extdata", "rhodopsins.fasta", package = "RhodopXin")
+sample <- RhodopXin::loadSequence(samplePath)
+sample
+```
+Alternatively, sequences of template rhodopsins can be retrieved just by providing
+a valid RCSB PDB id and it will be processed the same way as above. Note that extra
+information is printed by the ***read.pdb*** function which is used internally
+to fetch the PDB structure from the RCSB database.
+```{r}
+# Same RCSB id as template 2 above
+template2 <- loadFromRCSB("3UG9")
+template2
+```
+
+### Helix Alignments
+
+This is the main feature of `RhodopXin`. The function ***createHelixAlignments***
+performs pairwise alignments between each of the template rhodopsin's helices and 
+each of the query sequences, allowing users to see the conservation of residues 
+across a given helix.
+
+To see an example, we use the second template rhodopsin and query it against the
+sample rhodopsins we loaded above. Note that many messages may come from the external
+packages used by this function. It is normal to see 'GET' requests, PDB files in
+templorary directories and and alignment messages.
+```{r}
+alignments <- createHelixAlignments(template = template2, 
+                                    sequences = sample, 
+                                    rcsb_id = "3UG9")
+
+```
+### Output 1: all_pwa
+This output is a list of AAStringSet objects containing the combined pairwise alignments
+of each template's helix against all the given queries.
+```{r}
+alignments$all_pwa
+```
+
+### Output 2: template_ranges
+This output is a dataframe containing information on which positions of the query 
+sequence were aligned to the helix. This will still need to be processed in order
+to be mapped into the 3D structure.
+```{r}
+alignments$template_ranges
+```
+## Visualize Outputs
+There are two ways of visualizing the outputs of ***createHelixAlignments***.
+
+### Visualize Helix Alignments
+This function combines all of the helices alignments in one plot. For each helix plot,
+we have the helix sequence of the template aligned with the query sequences. The 
+left hand side of this plot shows which residue number this alignment comes from 
+as well as which query. Additionally, a sequence logo and a consensus plot of the 
+alignment is present on the top and bottom of the plot.
+
+Note the messages printed are from the external packages used. Also, warning is 
+suppressed in this chunk because the plotting function used keeps throwing a 
+warning although plots are unaffected. Lastly, the figures may appear squished
+but this is due to the rendering of the markdown. Thus, it is recommended to run
+this function in the R Shiny app because there, the size is configured for any input.
+```{r, warning=FALSE, fig.height=10, fig.width=8}
+visualizeHelixAlignments(alignments$all_pwa)
+```
+
+### Visualize Helix Mapping
+This function maps the conserved residues of a given query into the 3D structure 
+of the given template rhodopsin. Here we choose the first query to map into the
+structure.
+```{r}
+visualizeHelixMapping(template_ranges = alignments$template_ranges, 
+                      template = template2, 
+                      rcsb_id = "3UG9", 
+                      query_num = 1)
+```
+
+
+## References
+del Val, C., Royuela-Flor, J., Milenkovic, S., & Bondar, A.-N. (2014).
+Channelrhodopsins: A bioinformatics perspective. Biochimica et Biophysica Acta
+(BBA) - Bioenergetics, 1837(5), 643–655. https://doi.org/10.1016/j.bbabio.2013.11.005
+
+## Session Information
+
+```{r}
+sessionInfo()
+```
+

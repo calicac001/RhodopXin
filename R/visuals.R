@@ -2,7 +2,7 @@
 #'
 #' A function that takes the output of createHelixAlignments() and create visual
 #' representations of the alignments. This combines all of the helices alignments
-#' in one plot. For each helix plot, we have the helix sequence of the query aligned with
+#' in one plot. For each helix plot, we have the helix sequence of the template aligned with
 #' the query sequences. The left hand side of this plot shows which residue number
 #' this alignment comes from as well as which query. Additionally, a sequence logo
 #' and a consensus plot of the alignment is present on the top and bottom of the plot.

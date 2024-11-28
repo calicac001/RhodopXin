@@ -2,12 +2,12 @@ Package: RhodopXin
 Type: Package
 Title: A Package for the Exploratory Analysis of Rhodopsins
 Version: 0.1.0
-Authors@R: person("Chloe Nichole", "Calica"
+Authors@R: person("Chloe Nichole", "Calica",
                   email = "chloe.calica@mail.utoronto.ca", 
                   role = c("aut", "cre"))
 Maintainer: Chloe Nichole Calica <chloe.calica@mail.utoronto.ca>
 Description: Designed for the exploratory analysis of rhodopsins by investigating 
-    its sequential and structural characteristics compared to well- characterized
+    its sequential and structural characteristics compared to well-characterized
     template rhodopsins.
 License: GPL (>= 3)
 Depends: R (>= 3.1.0)

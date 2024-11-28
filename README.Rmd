@@ -63,7 +63,7 @@ browseVignettes("RhodopXin")
 
 4. ***visualizeHelixAlignments*** - takes the output of ***createHelixAlignments*** and create visual representations of the alignments
 
-5. ***visualizeHelixMApping*** - map the conserved residues from ***createHelixAlignments*** into the 3D structure of the given template rhodopsin
+5. ***visualizeHelixMapping*** - map the conserved residues from ***createHelixAlignments*** into the 3D structure of the given template rhodopsin
 
 Additionally, the following helper functions are present but not exported:
 
@@ -92,8 +92,7 @@ The author of the package is Chloe Nichole Calica. The author wrote the function
   - extract sequence given start and end positions in ***helixSequences***
   - extract sequence of the resolved template structure in ***resolvedMapDf***
 - `DECIPHER` - combining pairwise alignments of multiple queries in ***createHelixAlignments***
-- `pwalign`
-  - create pairwise alignments between template and query rhodopsins in ***createHelixAlignments*** and between the full and resolved sequence of the template rhodopsin in ***resolvedMapDf***
+- `pwalign` - create pairwise alignments between template and query rhodopsins in ***createHelixAlignments*** and between the full and resolved sequence of the template rhodopsin in ***resolvedMapDf***
 - `rPDBapi` get information on PDB structures in ***validateRcsbId***
 
 - ***templateMapping*** uses `purrr`, `tibble`, `tidyr` and `dplyr` for dataframe processing of the mapped positions in the resolved structure of the template rhodopsin.

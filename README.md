@@ -72,7 +72,7 @@ browseVignettes("RhodopXin")
     ***createHelixAlignments*** and create visual representations of the
     alignments
 
-5.  ***visualizeHelixMApping*** - map the conserved residues from
+5.  ***visualizeHelixMapping*** - map the conserved residues from
     ***createHelixAlignments*** into the 3D structure of the given
     template rhodopsin
 
@@ -125,11 +125,9 @@ sources are outlined below:
 - `DECIPHER` - combining pairwise alignments of multiple queries in
   ***createHelixAlignments***
 
-- `pwalign`
-
-  - create pairwise alignments between template and query rhodopsins in
-    ***createHelixAlignments*** and between the full and resolved
-    sequence of the template rhodopsin in ***resolvedMapDf***
+- `pwalign` - create pairwise alignments between template and query
+  rhodopsins in ***createHelixAlignments*** and between the full and
+  resolved sequence of the template rhodopsin in ***resolvedMapDf***
 
 - `rPDBapi` get information on PDB structures in ***validateRcsbId***
 
