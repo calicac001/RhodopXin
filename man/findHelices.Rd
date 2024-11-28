@@ -18,6 +18,10 @@ position of the helix in the sequence and 'end' for the end position
 A function that finds all the helices in a pdb structure given by an rcsb id
 and then return a dataframe for the start and end positions of each helix.
 }
+\examples{
+result <- findHelices(rcsb_id = "3UG9")
+
+}
 \references{
 Grant B.J., Rodrigues A.P.C., ElSawy K.M., McCammon J.A., Caves L.S.D. (2006).
 \emph{Bio3D: An R package for the comparative analysis of protein structures}.

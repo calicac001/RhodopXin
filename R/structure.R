@@ -1,74 +1,3 @@
-#' Find 3D Structure Given Amino Acid Sequence
-#'
-#' @param aaSeq An AAString object of the rhodopsin sequence that we want to find the 3D structure of
-#'
-#' @return dataframe with information on structures
-#'
-#' @examples
-#' #fastaPath <- system.file("extdata", "template.fasta", package = "RhodopXin")
-#' #seq <- loadSequence(fastaPath)
-#' #struct_df <- find3dStructure(seq)
-#'
-#' @references
-#' Korkmaz S, Yamasan B (2024). _rPDBapi: A Comprehensive Interface for Accessing the Protein
-#' Data Bank_. R package version 2.1.1, <https://CRAN.R-project.org/package=rPDBapi>.
-#'
-#' @export
-#'
-#' @importFrom rPDBapi SequenceOperator perform_search get_info
-
-find3dStructure <- function(aaSeq){
-  aaSeqChar <- as.character(aaSeq)
-  searchOp <- rPDBapi::SequenceOperator(aaSeqChar, sequence_type = "PROTEIN",
-                                        identity_cutoff = 1)
-  ids <- rPDBapi::perform_search(search_operator = searchOp)
-  structDataframe <- data.frame(rcsb_id = ids)
-
-  for (id in ids){
-    info <- rPDBapi::get_info(id)
-    structDataframe$title[structDataframe$rcsb_id == id] <- info$struct$title
-    structDataframe$keywords[structDataframe$rcsb_id == id] <- info$struct_keywords$text
-    structDataframe$paper[structDataframe$rcsb_id == id] <- info$rcsb_primary_citation$title
-  }
-
-  return(structDataframe)
-}
-
-#' Display 3D structure Given RCSB ID
-#'
-#' Adapted directly from rPDBapi's documentation
-#'
-#' @param rcsb_id desc
-#'
-#' @return Viewer
-#'
-#' @references
-#' Korkmaz S, Yamasan B (2024). _rPDBapi: A Comprehensive Interface for Accessing the Protein Data Bank_. R package version 2.1.1, <https://CRAN.R-project.org/package=rPDBapi>.
-#'
-#' Su W, Johnston B (2021). _r3dmol: Create Interactive 3D Visualizations of Molecular Data_. Rpackage version 0.1.2, <https://CRAN.R-project.org/package=r3dmol>.
-#'
-#' Wickham, H., François, R., Henry, L., Müller, K., Vaughan, D. (2023). _dplyr: A Grammar of Data Manipulation_. <https://dplyr.tidyverse.org>.
-#'
-#' @export
-#'
-#' @importFrom rPDBapi get_pdb_file
-#' @importFrom r3dmol r3dmol m_add_model m_set_style m_zoom_to
-#' @importFrom dplyr %>%
-
-loadStructure <- function(rcsb_id){
-  # Retrieve and parse a PDB structure
-  pdb_path <- rPDBapi::get_pdb_file(rcsb_id, filetype = "pdb", save = TRUE)
-
-  # Visualize the tertiary structure using r3dmol
-  viewer <- r3dmol::r3dmol() %>%
-    r3dmol::m_add_model(pdb_path$path, format = "pdb") %>% # Load the PDB file
-    r3dmol::m_set_style(style = r3dmol::m_style_cartoon()) %>% # Cartoon representation
-    r3dmol::m_zoom_to()
-
-  return(viewer)
-}
-
-
 #' Find Helices Positions Given RCSB ID
 #'
 #' A function that finds all the helices in a pdb structure given by an rcsb id
@@ -80,15 +9,15 @@ loadStructure <- function(rcsb_id){
 #' structure i.e. 'Helix 1' ... 'Helix n' and two columns: 'start' for the start
 #' position of the helix in the sequence and 'end' for the end position
 #'
+#' @examples
+#' result <- findHelices(rcsb_id = "3UG9")
+#'
 #' @references
 #' Grant B.J., Rodrigues A.P.C., ElSawy K.M., McCammon J.A., Caves L.S.D. (2006).
 #' _Bio3D: An R package for the comparative analysis of protein structures_.
 #' <http://thegrantlab.org/bio3d/>
 #'
-#' @export
-#'
 #' @importFrom bio3d read.pdb
-
 findHelices <- function(rcsb_id){
   # Check if the given rcsb_id is valid
   validateRcsbId(rcsb_id = rcsb_id)
@@ -114,6 +43,9 @@ findHelices <- function(rcsb_id){
 #' @param rcsb_id the RCSB accession code given by the user
 #'
 #' @return invisible null if the rcsb id is valid, otherwise throw an appropriate error
+#'
+#' @examples
+#' result <- validateRcsbId("3UG9")
 #'
 #' @references
 #' Korkmaz S, Yamasan B (2024). _rPDBapi: A Comprehensive Interface for Accessing_
@@ -152,12 +84,16 @@ validateRcsbId <- function(rcsb_id){
 
 #' Retrieve PDB file from RCSB
 #'
-#' A function to retrieve the pdb file given an rcsb id. This function also sets
-#' up a cache to handle where the pdb files are stored.
+#' A function to retrieve the pdb file given an rcsb id. Stores the pdb file in
+#' a temporary directory. The package deals with all this so the user does not have
+#' to manually manage and download the pdb files themselves.
 #'
 #' @param rcsb_id the RCSB accession code given by the user
 #'
-#' @return structure
+#' @return pdb class (see ?rPDBapi::read.pdb for specific info on components)
+#'
+#' @examples
+#' result <- getPDBstruct("3UG9")
 #'
 #' @references
 #' Grant B.J., Rodrigues A.P.C., ElSawy K.M., McCammon J.A., Caves L.S.D. (2006).
@@ -173,6 +109,8 @@ getPDBstruct <- function(rcsb_id){
   temp_path <- tempdir()
   pdb_file <- file.path(temp_path, paste0(rcsb_id, ".pdb"))
 
+  # Kept getting a warning on file being redownloaded so asked ChatGPT for help
+  # on how to fix warning and work with temporary files
   if (file.exists(pdb_file)) {
     message("Using existing PDB file from tempdir: ", pdb_file)
 

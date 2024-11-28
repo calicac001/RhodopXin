@@ -10,11 +10,16 @@ getPDBstruct(rcsb_id)
 \item{rcsb_id}{the RCSB accession code given by the user}
 }
 \value{
-structure
+pdb class (see ?rPDBapi::read.pdb for specific info on components)
 }
 \description{
-A function to retrieve the pdb file given an rcsb id. This function also sets
-up a cache to handle where the pdb files are stored.
+A function to retrieve the pdb file given an rcsb id. Stores the pdb file in
+a temporary directory. The package deals with all this so the user does not have
+to manually manage and download the pdb files themselves.
+}
+\examples{
+result <- getPDBstruct("3UG9")
+
 }
 \references{
 Grant B.J., Rodrigues A.P.C., ElSawy K.M., McCammon J.A., Caves L.S.D. (2006).

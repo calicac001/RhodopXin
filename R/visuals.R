@@ -24,6 +24,9 @@
 #' all_pwa <- pwa_results$all_pwa
 #' result <- visualizeHelixAlignments(all_pwa = all_pwa)
 #'
+#' # Note that output may look distorted/squished when run in a markdown file,
+#' # best to view it in the shiny app of this package. If not, adjust the
+#' fig.height or the R chunk.
 #'
 #' @references
 #' H. Wickham. _ggplot2: Elegant Graphics for Data Analysis_. Springer-Verlag New York, 2016.
@@ -48,6 +51,8 @@ visualizeHelixAlignments <- function(all_pwa){
   # Create list to store plots in
   plots <- list()
 
+  # something buggy with ggmsa, warning keeps appearing but has no effect on output
+  suppressWarnings({
   # Iterate through each alignment i.e. each AAStringSet object
   for(i in 1:length(all_pwa)){
     # Create the alignment plot, sequence logo and consensus plot
@@ -66,7 +71,7 @@ visualizeHelixAlignments <- function(all_pwa){
   # Combine plots using patchwork in columns of 2
   combined <- patchwork::wrap_plots(plots) +
     patchwork::plot_layout(ncol = 2, nrow = num_rows, heights = rep(1, num_rows))
-
+  })
   return(combined)
 }
 

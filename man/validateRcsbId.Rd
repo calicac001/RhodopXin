@@ -16,6 +16,10 @@ invisible null if the rcsb id is valid, otherwise throw an appropriate error
 A function that validates the rcsb id input given by the user so that the PDB
 structure can be fetched in the RCSB database
 }
+\examples{
+result <- validateRcsbId("3UG9")
+
+}
 \references{
 Korkmaz S, Yamasan B (2024). \emph{rPDBapi: A Comprehensive Interface for Accessing}
 \emph{the Protein Data Bank}. R package version 2.1.1,

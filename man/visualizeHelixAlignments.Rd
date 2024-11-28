@@ -7,18 +7,47 @@
 visualizeHelixAlignments(all_pwa)
 }
 \arguments{
-\item{all_pwa}{a list of AAStringSet objects containing the combined pairwise
-alignments of each template's helix. Each index in the list corresponds to the
-helix where that alignment was made e.g. the AAStringSet at index 1 corresponds
-to the combined pairwise alignments of all the query sequences against Helix 1}
+\item{all_pwa}{the all_pwa output of createHelixAlignments which is a list of
+AAStringSet objects containing the combined pairwise alignments of each template's
+helix.}
 }
 \value{
-a combined visual of all the helix alignments
+a combined visual of all the helix alignments in one plot.
 }
 \description{
 A function that takes the output of createHelixAlignments() and create visual
-representations of the alignments.
+representations of the alignments. This combines all of the helices alignments
+in one plot. For each helix plot, we have the helix sequence of the query aligned with
+the query sequences. The left hand side of this plot shows which residue number
+this alignment comes from as well as which query. Additionally, a sequence logo
+and a consensus plot of the alignment is present on the top and bottom of the plot.
+}
+\examples{
+# Create the pairwise alignments first
+template <- template_rhodopsins[1]
+sequences <- sample_rhodopsins
+rcsb_id <- "1QHJ"
+pwa_results <- createHelixAlignments(template = template, sequences = sequences, rcsb_id = rcsb_id)
+
+# Visualize the alignments
+all_pwa <- pwa_results$all_pwa
+result <- visualizeHelixAlignments(all_pwa = all_pwa)
+
+# Note that output may look distorted/squished when run in a markdown file,
+# best to view it in the shiny app of this package. If not, adjust the
+fig.height or the R chunk.
+
 }
 \references{
-ref here
+H. Wickham. \emph{ggplot2: Elegant Graphics for Data Analysis}. Springer-Verlag New York, 2016.
+
+L Zhou, T Feng, S Xu, F Gao, TT Lam, Q Wang, T Wu, H Huang, L Zhan, L Li, Y Guan, Z Dai, G
+Yu. \emph{ggmsa: a visual exploration tool for multiple sequence alignment and associated data}.
+Bioinformatics. 2022, 23(4):bbac222. 10.1093/bib/bbac222
+
+Pedersen T (2024). \emph{patchwork: The Composer of Plots}. R package version 1.3.0,
+\url{https://CRAN.R-project.org/package=patchwork}.
+
+Yu G (2024). \emph{aplot: Decorate a 'ggplot' with Associated Information}. R package version
+0.2.3, \url{https://CRAN.R-project.org/package=aplot}.
 }

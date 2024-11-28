@@ -7,15 +7,38 @@
 visualizeHelixMapping(template_ranges, template, rcsb_id, query_num)
 }
 \arguments{
-\item{template_ranges}{the dataframe returned by createHelixAlignments()}
+\item{template_ranges}{the dataframe template_ranges returned by createHelixAlignments()}
 
-\item{rcsb_id}{the template rhodopsin to map to}
+\item{rcsb_id}{tthe RCSB accession code of the template rhodopsin}
 
-\item{query_num}{to highlight}
+\item{query_num}{the number of query which to highligh in the structure. Follows
+the order in the FASTA file}
 }
 \value{
-r3dmol object
+r3dmol object is the viewer with the loaded 3d structure of the template
+and the aligned residues of the query highlighted.
 }
 \description{
-Map Helix Alignment to Structure
+Given the alignments produced from createHelixAlignments, mapped the conserved
+residues in to the 3d structure of the given template rhodopsin.
+}
+\examples{
+# Create the pairwise alignments first
+template <- template_rhodopsins[1]
+sequences <- sample_rhodopsins
+rcsb_id <- "1QHJ"
+pwa_results <- createHelixAlignments(template = template, sequences = sequences, rcsb_id = rcsb_id)
+
+# Visualize the alignments
+template_ranges <- pwa_results$template_ranges
+result <- visualizeHelixMapping(template_ranges = template_ranges, template = template, rcsb_id = rcsb_id, query_num = 1)
+
+}
+\references{
+Su W, Johnston B (2024). \emph{r3dmol: Create Interactive 3D Visualizations of Molecular Data}.
+R package version 0.2.0, commit 0eefc1c2c430fff0122ae71ae8c9cc4e8912190c,
+\url{https://github.com/swsoyee/r3dmol}.
+
+Wickham H, François R, Henry L, Müller K, Vaughan D (2023). \emph{dplyr: A Grammar of Data}
+\emph{Manipulation}. R package version 1.1.4, \url{https://CRAN.R-project.org/package=dplyr}.
 }
