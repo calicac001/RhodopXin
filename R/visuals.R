@@ -77,8 +77,8 @@ visualizeHelixAlignments <- function(all_pwa){
 
 #' Map Helix Alignment to Structure
 #'
-#' Given the alignments produced from createHelixAlignments, mapped the conserved
-#' residues in to the 3d structure of the given template rhodopsin.
+#' Given the alignments produced from createHelixAlignments, map the conserved
+#' residues in to the 3D structure of the given template rhodopsin.
 #'
 #' @param template_ranges the dataframe template_ranges returned by createHelixAlignments()
 #'

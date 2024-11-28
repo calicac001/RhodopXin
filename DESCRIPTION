@@ -2,13 +2,16 @@ Package: RhodopXin
 Type: Package
 Title: A Package for the Exploratory Analysis of Rhodopsins
 Version: 0.1.0
-Author: Chloe Nichole Calica
+Authors@R: person("Chloe Nichole", "Calica"
+                  email = "chloe.calica@mail.utoronto.ca", 
+                  role = c("aut", "cre"))
 Maintainer: Chloe Nichole Calica <chloe.calica@mail.utoronto.ca>
 Description: Designed for the exploratory analysis of rhodopsins by investigating 
-    its structural, functional, and sequential characteristics with a particular 
-    focus on integrating homology modelling with motif discovery.
+    its sequential and structural characteristics compared to well- characterized
+    template rhodopsins.
 License: GPL (>= 3)
 Depends: R (>= 3.1.0)
+biocViews: SequenceAlignment, ProteinStructure, Visualization
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
@@ -27,6 +30,9 @@ Imports:
     r3dmol,
     rPDBapi,
     shiny,
+    shinycssloaders,
+    shinyjs,
+    shinythemes,
     tibble,
     tidyr
 Suggests: 
@@ -35,3 +41,4 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 VignetteBuilder: knitr
+URL: https://github.com/calicac001/RhodopXin

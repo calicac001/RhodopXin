@@ -1,5 +1,21 @@
-# This example is adapted from
-# RStudio Inc. (2013). Tabsets. Shiny Gallery. URL:https://shiny.rstudio.com/gallery/tabsets.html
+# References
+
+# Attali D (2021). _shinyjs: Easily Improve the User Experience of Your Shiny Apps in
+# Seconds_. R package version 2.1.0, <https://CRAN.R-project.org/package=shinyjs>.
+
+# Attali D, Sali A (2024). _shinycssloaders: Add Loading Animations to a 'shiny' Output While
+# It's Recalculating_. R package version 1.1.0,
+# <https://CRAN.R-project.org/package=shinycssloaders>.
+
+# Chang W, Cheng J, Allaire J, Sievert C, Schloerke B, Xie Y, Allen J, McPherson J, Dipert A,
+# Borges B (2024). _shiny: Web Application Framework for R_. R package version 1.9.1,
+# <https://CRAN.R-project.org/package=shiny>.
+
+# Chang W (2021). _shinythemes: Themes for Shiny_. R package version 1.2.0,
+# <https://CRAN.R-project.org/package=shinythemes>.
+
+# OpenAI. (2024). ChatGPT (November 2024 version). Retrieved from
+# https://chat.openai.com
 
 library(shiny)
 library(shinycssloaders)
@@ -86,7 +102,7 @@ ui <- fluidPage(
           accept = c(".fasta", ".fa", ".txt"))
       ),
 
-      # actionButton
+      # Button to run alignment
       actionButton(inputId = "run_alignment", label = "Run Helix Alignments",
                    class = "btn-primary", style = "width: 100%;")
     ),
@@ -105,8 +121,9 @@ ui <- fluidPage(
   )
 )
 
-# Define server logic for random distribution app ----
+# Define server logic
 server <- function(input, output, session) {
+  # Setup reactive values for input
   template_rv <- reactiveVal(NULL)
   observe({
     if (input$template_type == "Sample Templates"){
@@ -148,6 +165,7 @@ server <- function(input, output, session) {
     }
   })
 
+  # Expression for when alignment buttion is clicked
   startAlignment <- eventReactive(input$run_alignment, {
     req(template_rv())
     req(query_rv())
@@ -160,7 +178,7 @@ server <- function(input, output, session) {
                                      rcsb_id = rcsb_id_rv())
   })
 
-
+  # Determine height dynamically
   plot_height <- reactive({
     if (!is.null(startAlignment())) {
       results <- startAlignment()
@@ -170,6 +188,7 @@ server <- function(input, output, session) {
     return(500)  # Default height if no data
   })
 
+  # Render the helix alignment plot
   output$helix_plot <- renderPlot({
     if(!is.null(startAlignment())){
       results <- startAlignment()
@@ -183,7 +202,7 @@ server <- function(input, output, session) {
   }
   )
 
-
+  # Dropdown to choose query for 3d mapping
   output$query_mapping <- renderUI({
     if (!is.null(startAlignment())) {
       results <- startAlignment()
@@ -203,6 +222,7 @@ server <- function(input, output, session) {
     }
   })
 
+  # Render the highlighted 3d structure depending on query input
   output$mapping_structure <- r3dmol::renderR3dmol({
     if (!is.null(startAlignment())){
       results <- startAlignment()
@@ -216,7 +236,7 @@ server <- function(input, output, session) {
   })
 }
 
-# Create Shiny app ----
+# Create Shiny app
 shinyApp(ui, server)
 
 #[END]

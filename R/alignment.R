@@ -238,6 +238,7 @@ helixSequences <- function(template, rcsb_id){
 #'
 #' Wickham H, François R, Henry L, Müller K, Vaughan D (2023). _dplyr: A Grammar of Data
 #' Manipulation_. R package version 1.1.4, <https://CRAN.R-project.org/package=dplyr>.
+#'
 #' Wickham H, Henry L (2023). _purrr: Functional Programming Tools_. R package version 1.0.2,
 #' <https://CRAN.R-project.org/package=purrr>.
 #'
