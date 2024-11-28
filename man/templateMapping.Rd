@@ -52,6 +52,7 @@ Müller K, Wickham H (2023). \emph{tibble: Simple Data Frames}. R package versio
 
 Wickham H, François R, Henry L, Müller K, Vaughan D (2023). \emph{dplyr: A Grammar of Data
 Manipulation}. R package version 1.1.4, \url{https://CRAN.R-project.org/package=dplyr}.
+
 Wickham H, Henry L (2023). \emph{purrr: Functional Programming Tools}. R package version 1.0.2,
 \url{https://CRAN.R-project.org/package=purrr}.
 

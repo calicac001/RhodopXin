@@ -57,10 +57,10 @@ browseVignettes("RhodopXin")
 
 `RhodopXin` contains the following main functions:
 
-1.  ***loadSequence()*** - takes in a FASTA file path and creates an
+1.  ***loadSequence*** - takes in a FASTA file path and creates an
     AAStringSet object out of it
 
-2.  ***loadFromRcsb()*** - takes in a RCSB PDB id and returns an
+2.  ***loadFromRcsb*** - takes in a RCSB PDB id and returns an
     AAStringSet object of the structure’s sequence
 
 3.  ***createHelixAlignments*** - performs pairwise alignment between
@@ -68,16 +68,12 @@ browseVignettes("RhodopXin")
     sequences, allowing users to see the conservation of residues across
     a given helix.
 
-4.  ***templateMapping*** - processes the `template_ranges` dataframe
-    returned by ***createHelixAlignments*** so it reflects the mapping
-    positions of the alignments to the template’s resolved structure
+4.  ***visualizeHelixAlignments*** - takes the output of
+    ***createHelixAlignments*** and create visual representations of the
+    alignments
 
-5.  ***visualizeHelixAlignments*** - takes the output of
-    ***createHelixAlignments()*** and create visual representations of
-    the alignments
-
-6.  ***visualizeHelixAlignments*** - map the conserved residues from
-    ***createHelixAlignments()*** into the 3D structure of the given
+5.  ***visualizeHelixMApping*** - map the conserved residues from
+    ***createHelixAlignments*** into the 3D structure of the given
     template rhodopsin
 
 Additionally, the following helper functions are present but not
@@ -85,53 +81,70 @@ exported:
 
 - ***helixSequences*** - returns a list of AAString objects containing
   the sequence info of the given template rhodopsin’s helices
-- ***resolvedMapDf*** - creates a dataframe containing the the residue
-  numbers in the full sequence of the template and the corresponding
-  residue numbers in the resolved structure when missing residues are
-  taken into account
 - ***findHelices*** - finds all the helices in a PDB structure given and
   then return a dataframe for the start and end positions of each helix.
 - ***validateRcsbId*** - validates the RCSB id input given by the user
   so that the PDB structure can be fetched in the RCSB database
 - ***getPDBstruct*** - retrieve the PDB file for given RCSB id
+- ***templateMapping*** - processes the `template_ranges` dataframe
+  returned by ***createHelixAlignments*** so it reflects the mapping
+  positions of the alignments to the template’s resolved structure
+- ***resolvedMapDf*** - creates a dataframe containing the the residue
+  numbers in the full sequence of the template and the corresponding
+  residue numbers in the resolved structure when missing residues are
+  taken into account
 
-An overview of `RhodopXin` is illustrated below. TBD
+The package also contains two `.fasta` files, processed into datasets,
+`template_rhodopsins` and `sample rhodopsins`, by the `loadSequence`
+function. See the package vignette for more details.
+
+An overview of `RhodopXin` is illustrated below.
+![](./inst/extdata/Overview.png)
 
 ## Contributions
 
 The author of the package is Chloe Nichole Calica. The author wrote the
-functions described above while contributions from external packages are
-outlined below:
+functions described above while contributions from external packages and
+sources are outlined below:
 
 - `bio3D`
+
   - fetch PDB structures and sequence in ***loadFromRcsb()***
   - read PDB files in ***findHelices***,  
   - write PDB files in ***getPDBstruct***
+
 - `Biostrings`
+
   - construct AAStringSet objects in ***loadSequence()***,
     ***loadFromRcsb()***, ***helixSequences***, ***resolvedMapDf***
   - extract sequence given start and end positions in
     ***helixSequences***
   - extract sequence of the resolved template structure in
     ***resolvedMapDf***
-- `DECIPHER`
-  - combining pairwise alignments of multiple queries in
-    ***createHelixAlignments***
+
+- `DECIPHER` - combining pairwise alignments of multiple queries in
+  ***createHelixAlignments***
+
 - `pwalign`
+
   - create pairwise alignments between template and query rhodopsins in
     ***createHelixAlignments*** and between the full and resolved
     sequence of the template rhodopsin in ***resolvedMapDf***
-- `rPDBapi`
-  - get information on PDB structures in ***validateRcsbId***
+
+- `rPDBapi` get information on PDB structures in ***validateRcsbId***
+
 - ***templateMapping*** uses `purrr`, `tibble`, `tidyr` and `dplyr` for
   dataframe processing of the mapped positions in the resolved structure
   of the template rhodopsin.
+
 - ***visualizeHelixAlignments*** uses `aplot`, `ggplot2`, `ggmsa` and
   `patchwork` to create the combined visualization of the helix
   alignments
+
 - ***visualizeHelixAlignments*** uses `dplyr` and `r3dmol` to create
   visualizations of the mapped alignments into the 3D structure of the
   template rhodopsin.
+
 - the shiny application was created using the following packages:
   `shiny`, `shinycssloaders`, `shinyjs`, and `shinythemes`
 
@@ -161,6 +174,11 @@ Framework for R*. R package version 1.9.1,
 
 Chang W (2021). *shinythemes: Themes for Shiny*. R package version
 1.2.0, <https://CRAN.R-project.org/package=shinythemes>.
+
+del Val, C., Royuela-Flor, J., Milenkovic, S., & Bondar, A.-N. (2014).
+*Channelrhodopsins: A bioinformatics perspective*. Biochimica et
+Biophysica Acta (BBA) - Bioenergetics, 1837(5), 643–655.
+<https://doi.org/10.1016/j.bbabio.2013.11.005>
 
 Grant B.J., Rodrigues A.P.C., ElSawy K.M., McCammon J.A., Caves L.S.D.
 (2006). *Bio3D: An R package for the comparative analysis of protein

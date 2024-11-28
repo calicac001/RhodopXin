@@ -245,8 +245,6 @@ helixSequences <- function(template, rcsb_id){
 #' Wickham H, Vaughan D, Girlich M (2024). _tidyr: Tidy Messy Data_. R package version 1.3.1,
 #' <https://CRAN.R-project.org/package=tidyr>.
 #'
-#' @export
-#'
 #' @importFrom purrr map2_lgl
 #' @importFrom tibble rownames_to_column
 #' @importFrom tidyr pivot_longer

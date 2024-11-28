@@ -19,8 +19,8 @@ r3dmol object is the viewer with the loaded 3d structure of the template
 and the aligned residues of the query highlighted.
 }
 \description{
-Given the alignments produced from createHelixAlignments, mapped the conserved
-residues in to the 3d structure of the given template rhodopsin.
+Given the alignments produced from createHelixAlignments, map the conserved
+residues in to the 3D structure of the given template rhodopsin.
 }
 \examples{
 # Create the pairwise alignments first
